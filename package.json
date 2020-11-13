@@ -1,0 +1,24 @@
+{
+  "name": "event-log-reader",
+  "version": "1.0.0",
+  "description": "Журнал чтение событий в из БД SQLite",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "set APP_DEBUG=true & node dist",
+    "test": "test",
+    "start": "set APP_DEBUG=false & node dist"
+  },
+  "keywords": [],
+  "author": "GerasimGerasimov",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.8",
+    "@types/sqlite3": "^3.1.6",
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.2"
+  }
+}
