@@ -1,1 +1,1 @@
-# events-log-reader
+# events-logger-service

@@ -1,0 +1,364 @@
+{
+  "events":[
+    {
+      "tags":{
+        "arg1":"RAM/FAULT"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Аварийное отключение"
+        },
+        "detail":{
+          "ru":"Обобщённый сигнал 'Авария'"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/GlobalError"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Внешняя ошибка"
+        },
+        "detail":{
+          "ru":"Авария сформирована внешним устройством для принудительного отключения"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/FieldFail"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Обрыв поля"
+        },
+        "detail":{
+          "ru":"Ток ротора ниже минимальной уставки свыше допустимого времени"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/UstMaxFlt"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Максимальное напряжение статора"
+        },
+        "detail":{
+          "ru":"Превышение максимального напряжения статора"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/IttMaxFlt"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Макс. ток выпрямителя"
+        },
+        "detail":{
+          "ru":"Ток выпрямителя превысил уставку максимального тока"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/IexcMaxFlt"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Макс. ток нагрузки"
+        },
+        "detail":{
+          "ru":"Ток нагрузки превысил уставку максимального тока"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/FltMPS"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Отключился силовой выключатель"
+        },
+        "detail":{
+          "ru":"Отключение силового выключателя во время работы возбудителя"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/FSAsyncRun"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Асинхронный ход по датчику наведённого напряжения"
+        },
+        "detail":{
+          "ru":"Допустимое время асинхронного хода превышено"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/FLongForce"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Превышение времени форсировки"
+        },
+        "detail":{
+          "ru":"Допустимое время форсировки превышено"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/FltCCSB"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Отключился выключатель цепей ГЩУ"
+        },
+        "detail":{
+          "ru":"Отключение выключателя цепей питания ГЩУ во время работы возбудителя"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/FreqMinFlt"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Низкая частота напряжения"
+        },
+        "detail":{
+          "ru":"Минимальная частота напряжения генератора"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/QminAsyncRun"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Асинхронный ход"
+        },
+        "detail":{
+          "ru":"Асинхронный ход по минимальной реактивной мощности"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/NotUpVoltage"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Неудачный пуск"
+        },
+        "detail":{
+          "ru":"Напряжение не достигло уставки за заданное время"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/R_INSL_FLT"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Земля в роторе"
+        },
+        "detail":{
+          "ru":"Сопротивление изоляция ротора недопустимо низкое"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/IstOV"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Макс. ток статора"
+        },
+        "detail":{
+          "ru":"Ток статора превысил уставку максимального тока"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/F1.NotValidReg"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Нет исправных регуляторов"
+        },
+        "detail":{
+          "ru":""
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/iSGFault"
+      },
+      "eventType":"alarm",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Защита генератора"
+        },
+        "detail":{
+          "ru":"получен сигнал 'Защита генератора'"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/PWR"
+      },
+      "eventType":"info",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Выпрямитель включен"
+        },
+        "detail":{
+          "ru":"На выпрямитель поданы импульсы управления"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/ForceByUst"
+      },
+      "eventType":"warning",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Форсировка"
+        },
+        "detail":{
+          "ru":"Подача тока с форсировкой по причине просадки напряжения статора"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/iSwState"
+      },
+      "eventType":"info",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Выключатель включен"
+        },
+        "detail":{
+          "ru":"БК выключателя в состоянии 'Включен'"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/iEnergize"
+      },
+      "eventType":"info",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Возбуждение"
+        },
+        "detail":{
+          "ru":"Включен дискретный вход команды 'Возбуждение'"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/iBlanking"
+      },
+      "eventType":"info",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Гашение"
+        },
+        "detail":{
+          "ru":"Включен дискретный вход команды 'Гашение'"
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/iAuto"
+      },
+      "eventType":"info",
+      "condition":["0","1"],
+      "description":{
+        "comment":{
+          "ru":"Положение переключателя 'РУЧНОЙ/АВТОМАТИЧЕСКИЙ'"
+        },
+        "detail":{
+          "ru":""
+        }
+      }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/F0.DEV_EQU"
+      },
+      "eventType":"warning",
+      "condition":["1"],
+      "description":{
+        "comment":{
+          "ru":"Регуляторы не эквивалентны"
+        },
+        "detail":{
+          "ru":""
+        }
+      }
+    }
+  ]
+}
