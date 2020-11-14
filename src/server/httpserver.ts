@@ -1,6 +1,9 @@
 import http = require('http');
 import express = require("express");
 import bodyParser = require('body-parser');
+import * as Utils from '../helpers/utils';
+
+const HostsDir: string = Utils.getAbsDirPath('');
 
 const app = express();
 const jsonParser = bodyParser.json()
@@ -10,8 +13,10 @@ export class HttpServer{
 
     private port: number;
     
-    constructor (port: number) {
-        this.port = port;
+    constructor (port?: number) {
+        Utils.validateFolderExistence(HostsDir);
+        const Settings = Utils.getJSONFromFile(HostsDir,'host.json')
+        this.port = port || (Settings.HOST.port || 4000);
         this.init();
     }
 
@@ -30,7 +35,7 @@ export class HttpServer{
             .put(jsonParser, [this.put.bind(this)]);
         
         this.https = http.createServer(app).listen(this.port);
-        console.log('events-log-reader server started at port: ', this.port);
+        console.log('event-logger-service server started at port: ', this.port);
     }
 
     private async get (request: any, response: any) {

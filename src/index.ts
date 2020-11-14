@@ -1,20 +1,11 @@
-console.log('event-log-reader started');
-import fs = require('fs');
-
-//import TDAO  from './DB/DAO';
-//import EventsRepositoty from './DB/EventsRepository';
-
+console.log('event-logger-service started');
 import { HttpServer } from './server/httpserver';
-import { getConfigFile } from './helpers/utils';
 
-const settings = JSON.parse(fs.readFileSync(getConfigFile(), 'utf8'));
-const Server: HttpServer = new HttpServer(settings.HOST.port);
-
-
+const Server: HttpServer = new HttpServer();
 
 function main(){
 
 }
 
 main()
-console.log('stop')
+console.log('event-logger-service stoped')

@@ -1,7 +1,4 @@
 {
-    "HOST":{
-        "port": 4000
-    },
     "groups":{
         "group0":{
             "devices":["U1","U2"],
