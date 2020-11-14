@@ -1,0 +1,15 @@
+{
+    "HOST":{
+        "port": 4000
+    },
+    "groups":{
+        "group0":{
+            "devices":["U1","U2"],
+            "source": "./config/events/vteg.json"
+        },
+        "group1":{
+            "devices":["U3"],
+            "source": "./config/events/icm.json"
+        }
+    }
+}
