@@ -5,9 +5,6 @@ import { HttpServer } from './server/httpserver';
 const Server: HttpServer = new HttpServer();
 const EventsSource: TEventsSource = new TEventsSource();
 
-function main(){
+console.log(EventsSource.getTagsFormSource('icm.json'))
 
-}
-
-main()
 console.log('event-logger-service stoped')
