@@ -2,11 +2,11 @@
     "groups":{
         "group0":{
             "devices":["U1","U2"],
-            "source": "./config/events/vteg.json"
+            "source": "vteg.json"
         },
         "group1":{
             "devices":["U3"],
-            "source": "./config/events/icm.json"
+            "source": "icm.json"
         }
     }
 }
