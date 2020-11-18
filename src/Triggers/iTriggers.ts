@@ -20,7 +20,3 @@ export interface ITriggerSource {
 export interface IEventsSource {
   events: Array<ITriggerSource>
 }
-
-export interface IDeviceTriggersSource {
-  trigger:{};
-}

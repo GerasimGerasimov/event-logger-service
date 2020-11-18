@@ -1,4 +1,4 @@
-import { IDeviceTriggersSource, IEventsSource, ITriggerSource } from '../Triggers/iTriggers';
+import { IEventsSource, ITriggerSource } from '../Triggers/iTriggers';
 import * as Utils from '../helpers/utils';
 
 const EventsSourceDir: string = Utils.getAbsDirPath('events');
@@ -7,7 +7,7 @@ export default class TEventsSource {
 
   private Devices: Array<string> = [];
   private TagsInEvents:Map<string, Array<string>> = new Map();//содержит все теги чтобы собрать запрос к устройству
-  private Triggers: Map<string, Array<IDeviceTriggersSource>> = new Map(); //сырые данные триггеров
+  private Triggers: Map<string, Array<ITriggerSource>> = new Map(); //сырые данные триггеров
   
   constructor () {
     Utils.validateFolderExistence(EventsSourceDir);
@@ -23,12 +23,12 @@ export default class TEventsSource {
   }
 
 
-  public get getAvalibleTriggers(): Map<string, Array<IDeviceTriggersSource>> {
+  public get getAvalibleTriggers(): Map<string, Array<ITriggerSource>> {
     return this.Triggers;
   }
 
-  public getTriggersSource(src: string): Array<IDeviceTriggersSource> | Error {
-    const triggers: Array<IDeviceTriggersSource> = this.Triggers.get(src);
+  public getTriggersSource(src: string): Array<ITriggerSource> | Error {
+    const triggers: Array<ITriggerSource> = this.Triggers.get(src);
     if (triggers) {
       return triggers;
     } else {
@@ -55,11 +55,11 @@ export default class TEventsSource {
     return res;
   }
 
-  private getTriggersMap(files:Array<Utils.IDirСontents>): Map<string, Array<IDeviceTriggersSource>> {
-    const res: Map<string, Array<IDeviceTriggersSource>> = new Map();
+  private getTriggersMap(files:Array<Utils.IDirСontents>): Map<string, Array<ITriggerSource>> {
+    const res: Map<string, Array<ITriggerSource>> = new Map();
     files.forEach( value => {
       const { Content, FileName} = {... value};
-      const content: Array<IDeviceTriggersSource> = JSON.parse(Content).events || [];
+      const content: Array<ITriggerSource> = JSON.parse(Content).events || [];
       res.set(FileName, content) 
     })
     return res;

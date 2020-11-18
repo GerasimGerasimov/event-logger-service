@@ -1,16 +1,15 @@
-import { IDeviceTriggersSource } from "../iTriggers";
+import { ITriggerSource } from "../iTriggers";
+import TTriggerTemplate from "../Trigger/TTriggerTemplate";
 
 export default class TTriggersTemplate {
 
-  private groups: Map<string, any> = new Map();
+  private Triggers: Set<TTriggerTemplate> = new Set();
 
-  constructor(Triggers: Map<string, Array<IDeviceTriggersSource>>) {
-    const key = Array.from(Triggers.keys());
-    /*
-    devs.forEach(item=>{
-      this.groups.set(item,{})
+  constructor(triggers: Array<ITriggerSource>) {
+    triggers.forEach(item=>{
+      const trigger: TTriggerTemplate = new TTriggerTemplate(item);
+      this.Triggers.add(trigger);
     })
-    */
   }
   
 }
