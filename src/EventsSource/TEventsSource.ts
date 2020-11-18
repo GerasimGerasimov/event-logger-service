@@ -1,39 +1,42 @@
+import { ITriggerSource } from '../Triggers/iTriggers';
 import * as Utils from '../helpers/utils';
 
 const EventsSourceDir: string = Utils.getAbsDirPath('events');
 
-interface IEventDescription {
-  comment:{};
-  detail:{}
-  /*
-  "comment":{
-    "ru":"Нет исправных регуляторов"
-  },
-  "detail":{
-    "ru":""
-  }*/
-}
-
-interface IEventSource {
-  tags:Map<string, string>;
-  eventType: string,
-  condition: Array<string>,
-  description:IEventDescription;
-}
-
 interface IEventsSource {
-  events: Array<IEventSource>
+  events: Array<ITriggerSource>
+}
+
+interface IDeviceTriggers {
+  trigger:{};
 }
 
 export default class TEventsSource {
 
-  private TagsInEvents:Map<string, Array<string>> = new Map();
-
+  private Devices: Array<string> = [];
+  private TagsInEvents:Map<string, Array<string>> = new Map();//содержит все теги чтобы собрать запрос к устройству
+  private Triggers: Map<string, Array<IDeviceTriggers>> = new Map(); //сырые данные триггеров
+  
   constructor () {
     Utils.validateFolderExistence(EventsSourceDir);
     let EventsFilesList: Array<string> =  Utils.getFilesList(EventsSourceDir);
+    this.Devices = EventsFilesList;
     let EventsFilesProps:Array<Utils.IDirСontents> = Utils.getFilesProps(EventsSourceDir, EventsFilesList);
     this.TagsInEvents = this.getTagsInEvents(EventsFilesProps);
+    this.Triggers = this.getTriggersMap(EventsFilesProps)
+  }
+
+  public get getAvalibleDevices(): Array<string> {
+    return this.Devices;
+  }
+
+  public getTriggersSource(src: string): Array<IDeviceTriggers> | Error {
+    const triggers: Array<IDeviceTriggers> = this.Triggers.get(src);
+    if (triggers) {
+      return triggers;
+    } else {
+      throw new Error (`Triggers at ${src} not found`);
+    }
   }
 
   public getTagsFormSource(src: string): Array<string> | Error {
@@ -55,14 +58,24 @@ export default class TEventsSource {
     return res;
   }
 
+  private getTriggersMap(files:Array<Utils.IDirСontents>): Map<string, Array<IDeviceTriggers>> {
+    const res: Map<string, Array<IDeviceTriggers>> = new Map();
+    files.forEach( value => {
+      const { Content, FileName} = {... value};
+      const content: Array<IDeviceTriggers> = JSON.parse(Content).events || [];
+      res.set(FileName, content) 
+    })
+    return res;
+  }
+
   private getTagsArrayFromContent(Content: any): Array<string> {
     const res: Array<string> = [];
     const tagsSet: Set<string> = new Set();
     const events:IEventsSource = JSON.parse(Content).events || [];
     //получаю в tagSet все не повторяющиеся теги для данного устройства
     for (const item in events) {
-      const value:IEventSource = events[item];
-      const tags: Array<string> = this. getTagsFromEventSource(value.tags);
+      const value:ITriggerSource = events[item];
+      const tags: Array<string> = this.getTagsFromEventSource(value.tags);
       tags.forEach(tag => tagsSet.add(tag))
     }
     //преобразую карту в массив
