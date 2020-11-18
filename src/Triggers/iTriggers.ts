@@ -16,3 +16,11 @@ export interface ITriggerSource {
   condition: Array<string>,
   description:IEventDescription;
 }
+
+export interface IEventsSource {
+  events: Array<ITriggerSource>
+}
+
+export interface IDeviceTriggersSource {
+  trigger:{};
+}

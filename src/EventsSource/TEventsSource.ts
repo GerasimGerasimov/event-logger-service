@@ -1,21 +1,13 @@
-import { ITriggerSource } from '../Triggers/iTriggers';
+import { IDeviceTriggersSource, IEventsSource, ITriggerSource } from '../Triggers/iTriggers';
 import * as Utils from '../helpers/utils';
 
 const EventsSourceDir: string = Utils.getAbsDirPath('events');
-
-interface IEventsSource {
-  events: Array<ITriggerSource>
-}
-
-interface IDeviceTriggers {
-  trigger:{};
-}
 
 export default class TEventsSource {
 
   private Devices: Array<string> = [];
   private TagsInEvents:Map<string, Array<string>> = new Map();//содержит все теги чтобы собрать запрос к устройству
-  private Triggers: Map<string, Array<IDeviceTriggers>> = new Map(); //сырые данные триггеров
+  private Triggers: Map<string, Array<IDeviceTriggersSource>> = new Map(); //сырые данные триггеров
   
   constructor () {
     Utils.validateFolderExistence(EventsSourceDir);
@@ -30,8 +22,13 @@ export default class TEventsSource {
     return this.Devices;
   }
 
-  public getTriggersSource(src: string): Array<IDeviceTriggers> | Error {
-    const triggers: Array<IDeviceTriggers> = this.Triggers.get(src);
+
+  public get getAvalibleTriggers(): Map<string, Array<IDeviceTriggersSource>> {
+    return this.Triggers;
+  }
+
+  public getTriggersSource(src: string): Array<IDeviceTriggersSource> | Error {
+    const triggers: Array<IDeviceTriggersSource> = this.Triggers.get(src);
     if (triggers) {
       return triggers;
     } else {
@@ -58,11 +55,11 @@ export default class TEventsSource {
     return res;
   }
 
-  private getTriggersMap(files:Array<Utils.IDirСontents>): Map<string, Array<IDeviceTriggers>> {
-    const res: Map<string, Array<IDeviceTriggers>> = new Map();
+  private getTriggersMap(files:Array<Utils.IDirСontents>): Map<string, Array<IDeviceTriggersSource>> {
+    const res: Map<string, Array<IDeviceTriggersSource>> = new Map();
     files.forEach( value => {
       const { Content, FileName} = {... value};
-      const content: Array<IDeviceTriggers> = JSON.parse(Content).events || [];
+      const content: Array<IDeviceTriggersSource> = JSON.parse(Content).events || [];
       res.set(FileName, content) 
     })
     return res;
