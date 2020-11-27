@@ -39,6 +39,11 @@ export function getFilesProps(root: string, FolderContentList: Array<string>):Ar
     return result;
 }
 
+export function getArrFromDelimitedStr(s: string, delimiter: string = ' '): Array<string> {
+    return s.slice().split(delimiter);
+}
+  
+
 export function getJSONFromFile(root: string, filename: string): any {
     try {
         return JSON.parse(fs.readFileSync(`${root}/${filename}`, "utf8"))

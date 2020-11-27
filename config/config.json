@@ -1,10 +1,6 @@
 {
     "groups":{
         "group0":{
-            "devices":["U1","U2"],
-            "source": "vteg.json"
-        },
-        "group1":{
             "devices":["U3"],
             "source": "icm.json"
         }

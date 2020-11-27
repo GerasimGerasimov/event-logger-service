@@ -2,28 +2,14 @@
   "events":[
     {
       "tags":{
-        "arg1":"RAM/F1.NotValidReg"
+        "arg1":"RAM/F1.NotValidReg",
+        "arg2":"RAM/F0.DEV_EQU"
       },
       "eventType":"alarm",
-      "condition":["1"],
+      "condition":["arg1 + arg2", "arg1 == 1"],
       "description":{
         "comment":{
           "ru":"Нет исправных регуляторов"
-        },
-        "detail":{
-          "ru":""
-        }
-      }
-    },
-    {
-      "tags":{
-        "arg1":"RAM/F0.DEV_EQU"
-      },
-      "eventType":"warning",
-      "condition":["1"],
-      "description":{
-        "comment":{
-          "ru":"Регуляторы не эквивалентны"
         },
         "detail":{
           "ru":""
