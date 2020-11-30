@@ -3,10 +3,15 @@
     {
       "tags":{
         "arg1":"RAM/F1.NotValidReg",
-        "arg2":"RAM/F0.DEV_EQU"
+        "arg2":"FLASH/IexcMax"
       },
       "eventType":"alarm",
-      "condition":["arg1 + arg2", "arg1 == 1"],
+      "trigger":{
+        "type":"FRONT",
+        "setCondition":"arg2",
+        "resetCondition":"0",
+        "tolerance": "0"
+      },
       "description":{
         "comment":{
           "ru":"Нет исправных регуляторов"

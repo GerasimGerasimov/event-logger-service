@@ -3,6 +3,7 @@
 
 import { getArrFromDelimitedStr } from "../../helpers/utils";
 import { ITriggerSource } from "../iTriggers";
+import { TTriggerProps } from "./TTriggerProps";
 
 enum eTriggerState {
   INIT,
@@ -21,27 +22,11 @@ export default class TTriggerTemplate {
   private current:   number = undefined;
   private previous:  number = undefined;
   private state: eTriggerState = eTriggerState.INIT;
-  private trigCondition: Array<any> = [];
+  private trigger: TTriggerProps;
 
   constructor(source: ITriggerSource){
     this.args = this.createTags(source.tags || new Map());
-    this.trigCondition = this.createConditions(source.condition || []);
-  }
-
-  //TODO выбор условия проверки condition (так как проверок может быть несколько)
-  
-  private createConditions(conditions: Array<string>): Array<any> {
-    //сформировать строку из названий args и условия
-    //let func = new Function([arg1, arg2, ...argN], functionBody)
-    const res: Array<any> = [];
-    const args:Array<string> = Array.from(this.args.keys());
-    conditions.forEach(item=>{
-      let body: string  = `return ${item}`;
-      let func = new Function(args.join( ), body);
-      console.log(func(2,5))
-      res.push(func);
-    })
-    return res;
+    this.trigger = new TTriggerProps(source.trigger, Array.from(this.args.keys()))
   }
 
   private createTags(tags: Map<string, string>): Map<string, ITagInfo> {
@@ -63,14 +48,6 @@ export default class TTriggerTemplate {
   }
 
   public getTagsValuesFromRespond(){
-
-  }
-
-  private onTrig() {
-
-  }
-
-  private setNextTrigValue(){
 
   }
 }
