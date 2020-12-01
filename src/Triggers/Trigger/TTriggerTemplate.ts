@@ -6,8 +6,9 @@ import { ITriggerSource } from "../iTriggers";
 import { TTriggerProps } from "./TTriggerProps";
 
 enum eTriggerState {
-  INIT,
-  RUN
+  WaitValidValues,
+  WaitSet,
+  WaitReset
 }
 
 interface ITagInfo {
@@ -21,12 +22,12 @@ export default class TTriggerTemplate {
   private args: Map<string, ITagInfo> = new Map();
   private current:   number = undefined;
   private previous:  number = undefined;
-  private state: eTriggerState = eTriggerState.INIT;
-  private trigger: TTriggerProps;
+  private state: eTriggerState = eTriggerState.WaitValidValues;
+  private triggerProps: TTriggerProps;
 
   constructor(source: ITriggerSource){
     this.args = this.createTags(source.tags || new Map());
-    this.trigger = new TTriggerProps(source.trigger, Array.from(this.args.keys()))
+    this.triggerProps = new TTriggerProps(source.trigger, Array.from(this.args.keys()))
   }
 
   private createTags(tags: Map<string, string>): Map<string, ITagInfo> {
@@ -48,6 +49,12 @@ export default class TTriggerTemplate {
   }
 
   public getTagsValuesFromRespond(){
+    this.isTagsValuesValid()
+  }
 
+  private isTagsValuesValid(): void | Error{
+    for (const [key, value] of this.args.entries()){
+      console.log(key, value)
+    }
   }
 }

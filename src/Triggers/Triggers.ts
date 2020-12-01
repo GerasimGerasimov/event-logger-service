@@ -11,3 +11,13 @@ export function createTemplateOfTriggersGroup(source: TEventsSource) {
     TriggersGroup.set(dev, TriggersTemplate)
   }
 }
+
+export function setValuesToTriggers(){
+  for (const TriggersTemplate of TriggersGroup.values()) {
+    console.log(TriggersTemplate)
+    for (const Trigger of TriggersTemplate.Triggers.values()) {
+      console.log(Trigger)
+      Trigger.getTagsValuesFromRespond();
+    }
+  }
+}

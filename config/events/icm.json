@@ -20,6 +20,26 @@
           "ru":""
         }
       }
+    },
+    {
+      "tags":{
+        "arg1":"RAM/F1.LNK1"
+      },
+      "eventType":"alarm",
+      "trigger":{
+        "type":"REAR",
+        "setCondition":"1",
+        "resetCondition":"0",
+        "tolerance": "0"
+      },
+      "description":{
+        "comment":{
+          "ru":"Нет исправных регуляторов"
+        },
+        "detail":{
+          "ru":""
+        }
+      }
     }
   ]
 }
