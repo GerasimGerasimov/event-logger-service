@@ -1,7 +1,7 @@
 {
     "groups":{
         "group0":{
-            "devices":["U3"],
+            "devices":["U1"],
             "source": "icm.json"
         }
     }

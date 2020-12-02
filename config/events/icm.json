@@ -2,8 +2,8 @@
   "events":[
     {
       "tags":{
-        "arg1":"RAM/F1.NotValidReg",
-        "arg2":"FLASH/IexcMax"
+        "arg1":"RAM/DIN.0(C1_AC)",
+        "arg2":"RAM/RINSL"
       },
       "eventType":"alarm",
       "trigger":{
@@ -23,7 +23,7 @@
     },
     {
       "tags":{
-        "arg1":"RAM/F1.LNK1"
+        "arg1":"DIN.1(C1_DC)"
       },
       "eventType":"alarm",
       "trigger":{
