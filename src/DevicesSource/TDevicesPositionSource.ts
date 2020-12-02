@@ -14,16 +14,20 @@ interface IConfig {
 
 export default class TDevicesPositionSource {
   
-  private EventsInDevs: Map<string, string> = new Map();
+  private eventsInDevs: Map<string, string> = new Map();
   
   constructor () {
     Utils.validateFolderExistence(DevicesSourceDir);
     const groups: IConfig = Utils.getJSONFromFile(DevicesSourceDir, 'config.json').groups || {};
-    this.EventsInDevs = this.createEventsInDevs(groups);
+    this.eventsInDevs = this.createEventsInDevs(groups);
   }
 
+  public get EventsInDevs(): Map<string, string> {
+    return this.eventsInDevs;
+  }
+  
   public getDevSource(dev: string): string | Error {
-    const src: string = this.EventsInDevs.get(dev);
+    const src: string = this.eventsInDevs.get(dev);
     if (src) return src;
     throw new Error (`Source for ${dev} not found`)
   }
