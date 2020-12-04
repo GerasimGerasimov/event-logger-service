@@ -1,33 +1,25 @@
 //"рождается" после первого прогона файла конфигурации
 //все триггеры и условия их срабатывания для каждого типа устройств описаны в типа icm.json файлах
-
 import { getArrFromDelimitedStr } from "../../helpers/utils";
-import { ITriggerSource } from "../iTriggers";
+import { ITagInfo, ITriggerSource } from "../iTriggers";
 import { TTriggerProps } from "./TTriggerProps";
-
-enum eTriggerState {
-  WaitValidValues,
-  WaitSet,
-  WaitReset
-}
-
-interface ITagInfo {
-  tag: string;
-  section: string;
-  value: number;
-}
 
 //надо их распарсить
 export default class TTriggerTemplate {
   private args: Map<string, ITagInfo> = new Map();
-  private current:   number = undefined;
-  private previous:  number = undefined;
-  private state: eTriggerState = eTriggerState.WaitValidValues;
   private triggerProps: TTriggerProps;
 
   constructor(source: ITriggerSource){
     this.args = this.createTags(source.tags || new Map());
     this.triggerProps = new TTriggerProps(source.trigger, Array.from(this.args.keys()))
+  }
+
+  public get Args():Map<string, ITagInfo> {
+    return this.args;
+  }
+
+  public get TriggerProps(): TTriggerProps {
+    return this.triggerProps;
   }
 
   private createTags(tags: Map<string, string>): Map<string, ITagInfo> {
@@ -48,13 +40,4 @@ export default class TTriggerTemplate {
     return {section, tag}
   }
 
-  public getTagsValuesFromRespond(){
-    this.isTagsValuesValid()
-  }
-
-  private isTagsValuesValid(): void | Error{
-    for (const [key, value] of this.args.entries()){
-      console.log(key, value)
-    }
-  }
 }

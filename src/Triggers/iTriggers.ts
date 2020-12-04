@@ -10,6 +10,12 @@ export interface IEventDescription {
   }*/
 }
 
+export interface ITagInfo {
+  tag: string;
+  section: string;
+  value: number;
+}
+
 export enum  ETriggerType {
   'FRONT',
   'REAR',
