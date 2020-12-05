@@ -10,9 +10,9 @@ export interface IEventDescription {
   }*/
 }
 
-export interface ITagInfo {
-  tag: string;
-  section: string;
+export interface IArgInfo {
+  tag: string; //Ustat
+  section: string; //RAM
   value: number;
 }
 

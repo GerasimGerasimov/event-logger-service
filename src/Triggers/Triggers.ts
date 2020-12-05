@@ -28,35 +28,27 @@ interface ICreateTriggersProps {
 }
 
 export class TTriggers {
-  private triggers: Map<string, Array<TTrigger>> = new Map();//position like "U1",  array of TTrigger
+  private triggers: Array<TTrigger> = [];//array of TTrigger
 
   constructor(props: ICreateTriggersProps){
     this.triggers = this.createTriggersOfDevicesFromTemplates({...props});
   }
 
-  private createTriggersOfDevicesFromTemplates(props: ICreateTriggersProps): Map<string, Array<TTrigger>> {
-  const triggers: Map<string, Array<TTrigger>> = new Map()
-  //templates = Map<'*.json', Set<TTriggerTemplate>} 
-  //events    = Devices<Array> = ['icm.json',...]
-  //positions = EventsInDevs<Map<position, *.json> = <'U1', 'icm.json'>
-  for (const [position, source] of props.positions.EventsInDevs.entries()) {
-    console.log(position, source);//'U1', 'icm.json'
-    const TriggersTepltate: TTriggersTemplate = props.templates.get(source);
-    console.log(TriggersTepltate)
-    
-    const ArrayOfTriggers: Array<TTrigger> = [];
-    TriggersTepltate.Triggers.forEach(triggerTemplate => {
-      console.log(triggerTemplate)
-      const trigger: TTrigger = new TTrigger(position, triggerTemplate);
-      /*TODO заполнить данными создаваемые триггеры*/
-      ArrayOfTriggers.push(trigger);
-    })
-    triggers.set(position, ArrayOfTriggers)
-
+  private createTriggersOfDevicesFromTemplates(props: ICreateTriggersProps): Array<TTrigger> {
+    const triggers: Array<TTrigger> = [];
+    //templates = Map<'*.json', Set<TTriggerTemplate>} 
+    //events    = Devices<Array> = ['icm.json',...]
+    //positions = EventsInDevs<Map<position, *.json> = <'U1', 'icm.json'>
+    for (const [position, source] of props.positions.EventsInDevs.entries()) {
+      const TriggersTepltate: TTriggersTemplate = props.templates.get(source);
+      TriggersTepltate.Triggers.forEach(triggerTemplate => {
+        const trigger: TTrigger = new TTrigger(position, triggerTemplate);
+        /*TODO заполнить данными создаваемые триггеры*/
+        triggers.push(trigger);
+      })
+    }
+    return triggers;
   }
-  console.log('createTriggersOfDeficesFromTemplates');
-  return triggers;
-}
 }
 /*
 export function setValuesToTriggers(TriggersGroup: Map<string, TTrigger>){

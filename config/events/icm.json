@@ -23,12 +23,13 @@
     },
     {
       "tags":{
-        "arg1":"DIN.1(C1_DC)"
+        "arg1":"RAM/DIN.1(C1_DC)",
+        "arg2":"1"
       },
       "eventType":"alarm",
       "trigger":{
         "type":"REAR",
-        "setCondition":"1",
+        "setCondition":"arg2",
         "resetCondition":"0",
         "tolerance": "0"
       },
