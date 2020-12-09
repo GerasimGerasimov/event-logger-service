@@ -49,7 +49,26 @@ export class TTriggers {
     }
     return triggers;
   }
+
+  public update(data: any) {
+    this.fillArgs(data);
+    this.updateStates();
+  }
+
+  private fillArgs(data: any) {
+    this.triggers.forEach(trigger => {
+      trigger.fillArgs(data);
+    })
+  }
+  
+  private updateStates(){
+    this.triggers.forEach(trigger => {
+      trigger.update();
+    })
+  }
 }
+
+
 /*
 export function setValuesToTriggers(TriggersGroup: Map<string, TTrigger>){
   for (const TriggersTemplate of TriggersGroup.values()) {

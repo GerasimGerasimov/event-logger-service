@@ -1,3 +1,4 @@
+import { TTriggers } from "../Triggers/Triggers";
 import { getArrFromDelimitedStr } from "../helpers/utils";
 
 class TPositionAndSection {
@@ -5,17 +6,22 @@ class TPositionAndSection {
   section: string = ''
 }
 
-export function fillTriggersTagsValues(data: any) {
-  for (const pos in data) {
-    const value = data[pos];//{U1:RAM {status, time, data{tag:value, ...}}}
-    for (const slotName in value) {
-      const {position, section} = getPositionAndSection(slotName);//U1:RAM
-      console.log(position, section)//position U1, section RAM
-    }
-    console.log(value)
-  }
+export function fillTriggersTagsValues(data: any, Triggers: TTriggers) {
+  Triggers.update(data);
 }
 
+export interface ITagAddress {
+  position: string;
+  section: string;
+  tag: string;
+}
+//отдаёт значение по тегу U1/RAM/Iexc
+export function getTagValue( tagAddr: ITagAddress, data: any): number {
+  const {position, section, tag} = {...tagAddr}
+  const SectionAtPosition: string = `${position}:${section}`;
+  const value: string = data[position][SectionAtPosition].data[tag] || undefined ;
+  return Number(value);
+}
 
 
 function getPositionAndSection(slot: string): TPositionAndSection {

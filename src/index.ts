@@ -19,7 +19,7 @@ const Triggers = new TTriggers({
       events: EventsSource,
         positions: DevicesPositionSource});
 const data = validation(dataset);//data = U1:{U1:RAM{...}}
-fillTriggersTagsValues(data);
+fillTriggersTagsValues(data, Triggers);
 
 //setValuesToTriggers(data, Triggers);
 

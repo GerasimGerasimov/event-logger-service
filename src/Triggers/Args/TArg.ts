@@ -1,17 +1,34 @@
+import { getTagValue, ITagAddress } from "../../Test/deviceparser";
 import { IArgInfo } from "../iTriggers";
 
 export abstract class TArg {
-
   protected value: number = undefined;
 
   public abstract get Value(): number;
+  public abstract setValue(data: any);
+  public abstract get Tag(): string;
 
 }
 
 export class TArgTag extends TArg {
-  
+  private tag: string = '';
+  private tagAddr: ITagAddress;
   constructor(position: string, arg: IArgInfo){
     super();
+    this.tag = `${position}/${arg.section}/${arg.tag}`;
+    this.tagAddr = {
+      position,
+      section: arg.section,
+      tag: arg.tag
+    }
+  }
+
+  public get Tag(): string {
+    return this.tag;
+  }
+
+  public setValue(data: any) {
+    this.value = getTagValue(this.tagAddr, data);
   }
 
   public get Value(): number {
@@ -25,6 +42,12 @@ export class TArgConst extends TArg {
     super();
     this.value = arg.value;
   }
+
+  public get Tag(): string {
+    return 'TArgConst';
+  }
+
+  public setValue(data: any) {}
 
   public get Value(): number {
     return this.value;
