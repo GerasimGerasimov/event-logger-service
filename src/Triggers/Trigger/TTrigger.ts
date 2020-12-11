@@ -1,5 +1,7 @@
 import { ArgFactory, TArg } from "../Args/TArg";
 import { IArgInfo } from "../iTriggers";
+import { TriggerCellFactory } from "../TriggerCell/TriggerCell";
+import { TTriggerCell } from "../TriggerCell/TTriggerCell";
 import { TTriggerProps } from "./TTriggerProps";
 import TTriggerTemplate from "./TTriggerTemplate";
 
@@ -11,6 +13,7 @@ enum eTriggerState {
 
 export class TTrigger {
   private args: Map<string, TArg> = new Map();
+  private TriggerCell: TTriggerCell;
   private triggerProps: TTriggerProps;
   
   private current:   number = undefined;
@@ -20,7 +23,7 @@ export class TTrigger {
   constructor(position: string, template: TTriggerTemplate){
     this.args = this.createArgs(position, template.Args);
     this.triggerProps = template.TriggerProps;
-    console.log(this.triggerProps);
+    this.TriggerCell = TriggerCellFactory(template.TriggerProps)
   }
 
   public createArgs(position: string, templates: Map<string, IArgInfo> ): Map<string, TArg> {

@@ -1,25 +1,7 @@
 import TDevicesPositionSource from "../DevicesSource/TDevicesPositionSource";
 import TEventsSource from "../EventsSource/TEventsSource";
 import { TTriggersTemplate } from "./Group/TriggersTemplate";
-import { ITriggerSource} from "./iTriggers";
 import { TTrigger } from "./Trigger/TTrigger";
-
-/*TODO нужно создавать триггеры и привязывать их к устройствам
-  U1: {triggers}
-  },
-  U2: {triggers}
-  }
-
-  или при создании триггера сообщать к какому Ux устройству он относится 
-  и соответсвенно потом после прочтения всех данных формировать структуру
-  {
-    U1:{data},
-    U2:{data}
-  },
-  потом делать цикл, всех триггеров по этой струкруре в поисках своих данных
-  ... кажется более логичным
-
-*/
 
 interface ICreateTriggersProps {
   templates: Map<string, TTriggersTemplate>,
@@ -67,16 +49,3 @@ export class TTriggers {
     })
   }
 }
-
-
-/*
-export function setValuesToTriggers(TriggersGroup: Map<string, TTrigger>){
-  for (const TriggersTemplate of TriggersGroup.values()) {
-    console.log(TriggersTemplate)
-    for (const Trigger of TriggersTemplate.Triggers.values()) {
-      console.log(Trigger)
-      Trigger.getTagsValuesFromRespond();
-    }
-  }
-}
-*/
