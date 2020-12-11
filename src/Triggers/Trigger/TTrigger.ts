@@ -14,15 +14,10 @@ enum eTriggerState {
 export class TTrigger {
   private args: Map<string, TArg> = new Map();
   private TriggerCell: TTriggerCell;
-  private triggerProps: TTriggerProps;
-  
-  private current:   number = undefined;
-  private previous:  number = undefined;
   private state: eTriggerState = eTriggerState.WaitValidValues;
 
   constructor(position: string, template: TTriggerTemplate){
     this.args = this.createArgs(position, template.Args);
-    this.triggerProps = template.TriggerProps;
     this.TriggerCell = TriggerCellFactory(template.TriggerProps)
   }
 
