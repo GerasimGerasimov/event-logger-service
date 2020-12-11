@@ -58,3 +58,19 @@ export function getNameFromFileName(filename: string): string {
     let s = filename.slice(0, i);
     return s;
 }
+
+export function getKeyOfEnumByValue( Enum:any, Value: any, def?: string): string {
+    let res: string = def || '';
+    for ( const [key, value] of Object.entries(Enum)){
+      if (value === Value) return key
+    }
+    return res;
+}
+
+export function isValueInEnum( Enum:any, Value: any): string {
+    let res: string = '';
+    for ( const value of Object.values(Enum)){
+      if (value === Value) return Value
+    }
+    return res;
+}

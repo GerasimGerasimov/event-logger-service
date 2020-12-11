@@ -1,3 +1,4 @@
+import { isValueInEnum } from "../../helpers/utils";
 import { ETriggerType, ITriggerDesctripion } from "../iTriggers";
 
 enum EConditionType {
@@ -62,18 +63,10 @@ export class TTriggerProps {
     }
   }
 
-  private setInitTriggerProc(proc: ETriggerType): ETriggerType {
-    if (this.hasValueOnEnum(ETriggerType, proc)) {
+  private setInitTriggerProc(proc: ETriggerType): ETriggerType | never {
+    if (isValueInEnum(ETriggerType, proc)) {
       return proc;
-    } else {
-      throw new Error (`Trigger function ${proc} not found`) 
     }
-  }
-
-  private hasValueOnEnum (Enum: any, value: any): boolean {
-    for (const [key, enumValue] of Object.entries(Enum)) {
-      if (value === enumValue) return true;
-    }
-    return false
+    throw new Error (`Trigger function ${proc} not found`) 
   }
 }

@@ -1,7 +1,3 @@
-export class TTriggerCell {
-
-  constructor() {
-    
-  }
+export abstract class TTriggerCell {
 
 }
