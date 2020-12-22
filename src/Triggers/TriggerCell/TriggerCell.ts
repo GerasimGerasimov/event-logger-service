@@ -1,9 +1,9 @@
 import { isValueInEnum } from "../../helpers/utils";
 import { TTriggerProps } from "../Trigger/TTriggerProps";
 import { TTriggerCell } from "./TTriggerCell";
-import { TTRiggerFront } from "./TTriggerFront";
-import { TTRiggerRear } from "./TTriggerRear";
-import { TTRiggerToggle } from "./TTriggerToggle";
+import { TTriggerFront } from "./TTriggerFront";
+import { TTriggerRear } from "./TTriggerRear";
+import { TTriggerToggle } from "./TTriggerToggle";
 
 enum ETriggerTypes {
   'FRONT',
@@ -14,9 +14,9 @@ enum ETriggerTypes {
 export function TriggerCellFactory (props: TTriggerProps): TTriggerCell  {
   const ObjType: string = getTriggerCellObjectType(props.triggerProc);
   const ObjTypes: {[index: string]: any} = {
-    'FRONT'  : () => {return new TTRiggerFront  (props)},
-    'REAR'   : () => {return new TTRiggerRear   (props)},
-    'TOGGLE' : () => {return new TTRiggerToggle (props)},
+    'FRONT'  : () => {return new TTriggerFront  (props)},
+    'REAR'   : () => {return new TTriggerRear   (props)},
+    'TOGGLE' : () => {return new TTriggerToggle (props)},
     'default': () => {
         console.log(`${ObjType} not found`)
         return undefined;

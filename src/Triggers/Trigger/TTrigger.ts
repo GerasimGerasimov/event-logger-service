@@ -2,7 +2,6 @@ import { ArgFactory, TArg } from "../Args/TArg";
 import { IArgInfo } from "../iTriggers";
 import { TriggerCellFactory } from "../TriggerCell/TriggerCell";
 import { TTriggerCell } from "../TriggerCell/TTriggerCell";
-import { TTriggerProps } from "./TTriggerProps";
 import TTriggerTemplate from "./TTriggerTemplate";
 
 enum eTriggerState {
@@ -40,7 +39,7 @@ export class TTrigger {
     //TODO установка состояния в зависимости от внешних условий
     try {
       this.isArgsValid();
-      this.checkTrigState();
+      this.updateCell(this.args);
     } catch (e) {
       this.setTriggerState(eTriggerState.WaitValidValues)
     }
@@ -54,6 +53,11 @@ export class TTrigger {
     }
   }
 
+  private updateCell(args: Map<string, TArg>): void | Error {
+    this.TriggerCell.update(args);
+  }
+  
+  /*
   private checkTrigState(){
     /*TODO
     1) если триггер в WaitValidValues то (раз сюда попали значит они Валидны)
@@ -62,6 +66,7 @@ export class TTrigger {
        установится либо в WaitSet либо в WaitReset
     2) Устаналивать противоположенное состение в зависимости от условий WaitSet либо в WaitReset
     */
+   /*
    switch (this.state) {
      case eTriggerState.WaitValidValues:
       this.setInitialTrigState();
@@ -74,7 +79,7 @@ export class TTrigger {
   private setInitialTrigState() {
 
   }
-
+  */
   private setTriggerState(newState: eTriggerState) {
     this.state = newState;
   }
