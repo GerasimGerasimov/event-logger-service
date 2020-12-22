@@ -35,35 +35,46 @@ export class TTriggerFront extends TTriggerCell {
     2) Устаналивать противоположенное состение в зависимости от условий WaitSet либо в WaitReset
     */
   private doStateAction() {
-    switch (this.state) {
-      case ETriggerCellState.WaitValidValues:
-       this.setInitialCellState();
-       break;
-      case ETriggerCellState.WaitReset: break;
-      case ETriggerCellState.WaitSet: break;
+    try {
+        const arg1 = this.args.get('arg1').Value;
+        const arg2 = this.args.get('arg2').Value;
+        switch (this.state) {
+          case ETriggerCellState.WaitValidValues:
+           this.setInitialCellState({arg1, arg2});
+           break;
+          case ETriggerCellState.WaitReset: break;
+          case ETriggerCellState.WaitSet: break;
+        }
+    } catch (e) {
+      this.state = ETriggerCellState.WaitValidValues;
     }
   }
 
-  private setInitialCellState() {
+  private waitChangeStateToReset({arg1, arg2}) {
+    const resetCondition= this.triggerProps.resetCondition;
+    const setCondition= this.triggerProps.setCondition;
+    /**TODO учесть Condition */
+    this.state = (arg1 >= arg2)
+    ? ETriggerCellState.WaitReset
+    : ETriggerCellState.WaitSet
+
+  }
+
+  private waitChangeSteteToSet({arg1, arg2}) {
+
+  }
+
+  private setInitialCellState({arg1, arg2}) {
+    const resetCondition= this.triggerProps.resetCondition;
+    const setCondition= this.triggerProps.setCondition;
     /*TODO аргументы валидны (раз сюда пришли) значит надо установить ячейку
            в текущее (по аргументам) состояние и определить какое событие ждать дальше
            для FRONT-ячейки это будет либо событие WaitSet, либо WaitReset */
-    this.getTemporaryState();
-  }
-
-  private getTemporaryState() {
       /**arg1 >= setCondition -> находится в состоянии Set поэтому надо ждать ReSet, ставлю WaitReset */
       /**arg1 <= resetCondition -> находится в состоянии Reset поэтому надо ждать Set, ставлю WaitSet */
-      try {
-        const arg1 = this.args.get('arg1').Value;
-        const arg2 = this.args.get('arg2').Value;
-        if ( arg1 >= arg2 ) {
-          this.state = ETriggerCellState.WaitReset;
-        } else {
-          this.state = ETriggerCellState.WaitSet;
-        }
-      } catch { //могут не совпасть имена аргументов и ихкол-во
-          this.state = ETriggerCellState.WaitValidValues;
-      }
+    this.state = (arg1 >= arg2)
+      ? ETriggerCellState.WaitReset
+      : ETriggerCellState.WaitSet
   }
+
 }
