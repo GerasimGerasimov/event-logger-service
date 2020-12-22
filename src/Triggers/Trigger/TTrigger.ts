@@ -1,19 +1,13 @@
 import { ArgFactory, TArg } from "../Args/TArg";
 import { IArgInfo } from "../iTriggers";
+import { ITriggerCellResult } from "../TriggerCell/iTreggerCell";
 import { TriggerCellFactory } from "../TriggerCell/TriggerCell";
 import { TTriggerCell } from "../TriggerCell/TTriggerCell";
 import TTriggerTemplate from "./TTriggerTemplate";
 
-enum eTriggerState {
-  WaitValidValues,
-  WaitSet,
-  WaitReset
-}
-
 export class TTrigger {
   private args: Map<string, TArg> = new Map();
   private TriggerCell: TTriggerCell;
-  private state: eTriggerState = eTriggerState.WaitValidValues;
 
   constructor(position: string, template: TTriggerTemplate){
     this.args = this.createArgs(position, template.Args);
@@ -41,7 +35,7 @@ export class TTrigger {
       this.isArgsValid();
       this.updateCell(this.args);
     } catch (e) {
-      this.setTriggerState(eTriggerState.WaitValidValues)
+      this.TriggerCell.setInitialState();
     }
   }
   
@@ -53,34 +47,8 @@ export class TTrigger {
     }
   }
 
-  private updateCell(args: Map<string, TArg>): void | Error {
-    this.TriggerCell.update(args);
-  }
-  
-  /*
-  private checkTrigState(){
-    /*TODO
-    1) если триггер в WaitValidValues то (раз сюда попали значит они Валидны)
-       то надо "предзарядить" триггер на основании текущих значений аргументов
-       чтобы небыло ложного срабатывания. После этого действия, состояние
-       установится либо в WaitSet либо в WaitReset
-    2) Устаналивать противоположенное состение в зависимости от условий WaitSet либо в WaitReset
-    */
-   /*
-   switch (this.state) {
-     case eTriggerState.WaitValidValues:
-      this.setInitialTrigState();
-      break;
-     case eTriggerState.WaitReset: break;
-     case eTriggerState.WaitSet: break;
-   }
+  private updateCell(args: Map<string, TArg>): ITriggerCellResult | Error {
+    return this.TriggerCell.update(args);
   }
 
-  private setInitialTrigState() {
-
-  }
-  */
-  private setTriggerState(newState: eTriggerState) {
-    this.state = newState;
-  }
 }

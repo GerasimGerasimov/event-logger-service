@@ -1,5 +1,6 @@
 import { TArg } from "../Args/TArg";
 import { TTriggerProps } from "../Trigger/TTriggerProps";
+import { ITriggerCellResult } from "./iTreggerCell";
 import { TTriggerCell } from "./TTriggerCell";
 
 export class TTriggerToggle extends TTriggerCell {
@@ -8,7 +9,12 @@ export class TTriggerToggle extends TTriggerCell {
     super();
   }
   
-  public update(args: Map<string, TArg>): void | Error {
+  public update(args: Map<string, TArg>): ITriggerCellResult | Error {
+    const trig: ITriggerCellResult = {trig:''};
+    return trig;
+  }
+
+  public setInitialState(): void {
     
   }
 }

@@ -16,7 +16,7 @@ export interface ITagAddress {
   tag: string;
 }
 //отдаёт значение по тегу U1/RAM/Iexc
-export function getTagValue( tagAddr: ITagAddress, data: any): number {
+export function getTagValue( tagAddr: ITagAddress, data: any): number | undefined {
   const {position, section, tag} = {...tagAddr}
   const SectionAtPosition: string = `${position}:${section}`;
   const value: string = data[position][SectionAtPosition].data[tag] || undefined ;
