@@ -2,6 +2,7 @@
   "events":[
     {
       "tags":{
+        "input":"RAM/DIN.0(C2_AC)",
         "arg1":"RAM/DIN.0(C1_AC)",
         "arg2":"RAM/RINSL"
       },
@@ -23,6 +24,7 @@
     },
     {
       "tags":{
+        "input":"RAM/DIN.1(C1_DC)",
         "arg1":"RAM/DIN.1(C1_DC)",
         "arg2":"1"
       },
