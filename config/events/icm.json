@@ -21,28 +21,6 @@
           "ru":""
         }
       }
-    },
-    {
-      "tags":{
-        "input":"RAM/DIN.1(C1_DC)",
-        "arg1":"RAM/DIN.1(C1_DC)",
-        "arg2":"1"
-      },
-      "eventType":"alarm",
-      "trigger":{
-        "type":"REAR",
-        "setCondition":"arg2",
-        "resetCondition":"0",
-        "tolerance": "0"
-      },
-      "description":{
-        "comment":{
-          "ru":"Нет исправных регуляторов"
-        },
-        "detail":{
-          "ru":""
-        }
-      }
     }
   ]
 }
