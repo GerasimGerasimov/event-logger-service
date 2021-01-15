@@ -9,7 +9,7 @@ export class TTriggerRear extends TTriggerCell {
     super();
   }
 
-  public update(args: Map<string, TArg>): ITriggerCellResult | Error {
+  public getTrigEvent(args: Map<string, TArg>): ITriggerCellResult | undefined {
     const trig: ITriggerCellResult = {trig:''};
     return trig;
   }

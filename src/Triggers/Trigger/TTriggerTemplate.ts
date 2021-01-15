@@ -1,6 +1,5 @@
 //"рождается" после первого прогона файла конфигурации
 //все триггеры и условия их срабатывания для каждого типа устройств описаны в типа icm.json файлах
-import { getArrFromDelimitedStr } from "../../helpers/utils";
 import { createArgsTemplates } from "../Args/ArgHelpers";
 import { IArgInfo, ITriggerSource } from "../iTriggers";
 import { TTriggerProps } from "./TTriggerProps";
@@ -12,7 +11,7 @@ export default class TTriggerTemplate {
 
   constructor(source: ITriggerSource){
     this.args = createArgsTemplates(source.tags || new Map());
-    this.triggerProps = new TTriggerProps(source.trigger, Array.from(this.args.keys()))
+    this.triggerProps = new TTriggerProps(source.trigger, Array.from(this.args.keys()), source.description, source.eventType);
   }
 
   public get Args():Map<string, IArgInfo> {

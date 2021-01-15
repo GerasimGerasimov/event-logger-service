@@ -20,6 +20,8 @@ const Triggers = new TTriggers({
         positions: DevicesPositionSource});
 const data = validation(dataset);//data = U1:{U1:RAM{...}}
 fillTriggersTagsValues(data, Triggers);
+fillTriggersTagsValues(data, Triggers);
+fillTriggersTagsValues(data, Triggers);
 
 //setValuesToTriggers(data, Triggers);
 

@@ -2,6 +2,7 @@ import TDevicesPositionSource from "../DevicesSource/TDevicesPositionSource";
 import TEventsSource from "../EventsSource/TEventsSource";
 import { TTriggersTemplate } from "./Group/TriggersTemplate";
 import { TTrigger } from "./Trigger/TTrigger";
+import { ITriggerCellResult } from "./TriggerCell/iTreggerCell";
 
 interface ICreateTriggersProps {
   templates: Map<string, TTriggersTemplate>,
@@ -32,20 +33,20 @@ export class TTriggers {
     return triggers;
   }
 
-  public update(data: any) {
-    this.fillArgs(data);
-    this.updateStates();
-  }
-
-  private fillArgs(data: any) {
+  public fillArgs(data: any) {
     this.triggers.forEach(trigger => {
       trigger.fillArgs(data);
     })
   }
   
-  private updateStates(){
+  public getTriggersEvent(): Set<ITriggerCellResult>{
+    const res:Set<ITriggerCellResult> = new Set()
     this.triggers.forEach(trigger => {
-      trigger.update();
+      const event: ITriggerCellResult | undefined = trigger.getTriggerEvent();
+      if (event !== undefined) {
+        res.add(event)
+      }
     })
+    return res;
   }
 }

@@ -1,12 +1,12 @@
 import { TArg } from "../Args/TArg";
-import { TTriggerProps } from "../Trigger/TTriggerProps";
+import { TCondition, TTriggerProps } from "../Trigger/TTriggerProps";
 import { ETriggerCellState, ITriggerCellResult } from "./iTreggerCell";
 import { TTriggerCell } from "./TTriggerCell";
 
 export class TTriggerFront extends TTriggerCell {
   
   private triggerProps: TTriggerProps;
-  private args: Map<string, TArg>
+  private args: Map<string, TArg>;
   private state: ETriggerCellState;
 
   constructor (props: TTriggerProps) {
@@ -15,11 +15,9 @@ export class TTriggerFront extends TTriggerCell {
     this.setInitialState();
   }
   
-  public update(args: Map<string, TArg>): ITriggerCellResult | Error {
-    //считается что аргументы пришли уже проверенные
+  public getTrigEvent(args: Map<string, TArg>): ITriggerCellResult | undefined {
     this.args = args;
-    const trig: ITriggerCellResult = {trig:''};
-    this.doStateAction();
+    const trig: ITriggerCellResult = this.doStateAction();
     return trig;
   }
 
@@ -34,47 +32,72 @@ export class TTriggerFront extends TTriggerCell {
        установится либо в WaitSet либо в WaitReset
     2) Устаналивать противоположенное состение в зависимости от условий WaitSet либо в WaitReset
     */
-  private doStateAction() {
+  private getArgsValues(): Map<string, number> {
+    const res: Map<string, number> = new Map()
+    for ( const [key, arg] of this.args.entries()) {
+      const value = arg.Value
+      res.set(key, value)
+    }
+    return res
+  }
+
+  private doStateAction():ITriggerCellResult | undefined {
     try {
-        const arg1 = this.args.get('arg1').Value;
-        const arg2 = this.args.get('arg2').Value;
+        const values: Map<string, number> = this.getArgsValues();
         switch (this.state) {
           case ETriggerCellState.WaitValidValues:
-           this.setInitialCellState({arg1, arg2});
-           break;
-          case ETriggerCellState.WaitReset: break;
-          case ETriggerCellState.WaitSet: break;
+            return this.setInitialCellState(values);
+          case ETriggerCellState.WaitReset:
+            return this.waitChangeStateToReset(values);
+          case ETriggerCellState.WaitSet: 
+            return this.waitChangeStateToSet(values);
         }
     } catch (e) {
       this.state = ETriggerCellState.WaitValidValues;
     }
   }
 
-  private waitChangeStateToReset({arg1, arg2}) {
-    const resetCondition= this.triggerProps.resetCondition;
+  private waitChangeStateToSet(args: Map<string, number>): ITriggerCellResult | undefined {
+    const input = args.get('input')
     const setCondition= this.triggerProps.setCondition;
-    /**TODO учесть Condition */
-    this.state = (arg1 >= arg2)
+    const setValue: number = setCondition.getConditionValue(args)
+    if (input >= setValue) {
+      this.state = ETriggerCellState.WaitReset;
+      /**TODO сообщить что сработал триггер SET */
+      const res: ITriggerCellResult = {
+        trig: {
+          event:this.triggerProps.triggerProc, //FRONT
+          input: this.args.get('input').Tag,
+          eventType: this.triggerProps.eventType,
+          describe: this.triggerProps.describe.comment['ru']
+        }
+      }
+      return res;
+    }
+    return undefined;
+  }
+
+  private waitChangeStateToReset(args: Map<string, number>): undefined {
+    const input = args.get('input')
+    const resetCondition= this.triggerProps.setCondition;
+    const resetValue: number = resetCondition.getConditionValue(args)
+    if (input <= resetValue) {
+      this.state = ETriggerCellState.WaitSet;
+    }
+    return undefined;
+  }
+
+  private setInitialCellState(args: Map<string, number>): undefined {
+    const resetCondition: TCondition = this.triggerProps.resetCondition;
+    const setCondition: TCondition = this.triggerProps.setCondition;
+    const resetValue: number = resetCondition.getConditionValue(args);
+    const setValue: number = setCondition.getConditionValue(args)
+    const input = args.get('input')
+    
+    this.state = (input >= setValue)
     ? ETriggerCellState.WaitReset
     : ETriggerCellState.WaitSet
-
-  }
-
-  private waitChangeSteteToSet({arg1, arg2}) {
-
-  }
-
-  private setInitialCellState({arg1, arg2}) {
-    const resetCondition= this.triggerProps.resetCondition;
-    const setCondition= this.triggerProps.setCondition;
-    /*TODO аргументы валидны (раз сюда пришли) значит надо установить ячейку
-           в текущее (по аргументам) состояние и определить какое событие ждать дальше
-           для FRONT-ячейки это будет либо событие WaitSet, либо WaitReset */
-      /**arg1 >= setCondition -> находится в состоянии Set поэтому надо ждать ReSet, ставлю WaitReset */
-      /**arg1 <= resetCondition -> находится в состоянии Reset поэтому надо ждать Set, ставлю WaitSet */
-    this.state = (arg1 >= arg2)
-      ? ETriggerCellState.WaitReset
-      : ETriggerCellState.WaitSet
+    return undefined;
   }
 
 }

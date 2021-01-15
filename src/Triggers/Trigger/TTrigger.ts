@@ -29,17 +29,18 @@ export class TTrigger {
     })
   }
 
-  public update(){
+  public getTriggerEvent(): ITriggerCellResult | undefined {
     //TODO установка состояния в зависимости от внешних условий
     try {
       this.isArgsValid();
-      this.updateCell(this.args);
+      return this.getCellTrigEvent(this.args);
     } catch (e) {
       this.TriggerCell.setInitialState();
     }
+    return undefined;
   }
   
-  private isArgsValid(): void | Error {
+  public isArgsValid(): void | Error {
     for (const [key, arg] of this.args.entries()) {
       if (arg.Value === undefined) {
         throw new Error (`${arg} tag:${arg.Tag} is undefined`)
@@ -47,8 +48,8 @@ export class TTrigger {
     }
   }
 
-  private updateCell(args: Map<string, TArg>): ITriggerCellResult | Error {
-    return this.TriggerCell.update(args);
+  private getCellTrigEvent(args: Map<string, TArg>): ITriggerCellResult | undefined {
+    return this.TriggerCell.getTrigEvent(args);
   }
 
 }
