@@ -69,7 +69,8 @@ export class TTriggerFront extends TTriggerCell {
           event:this.triggerProps.triggerProc, //FRONT
           input: this.args.get('input').Tag,
           eventType: this.triggerProps.eventType,
-          describe: this.triggerProps.describe.comment['ru']
+          describe: this.triggerProps.describe.comment['ru'],
+          date: new Date().toISOString()/**TODO добавлять дату создания */
         }
       }
       return res;
