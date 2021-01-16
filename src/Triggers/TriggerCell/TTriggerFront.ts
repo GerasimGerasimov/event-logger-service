@@ -63,6 +63,7 @@ export class TTriggerFront extends TTriggerCell {
     const setValue: number = setCondition.getConditionValue(args)
     if (input >= setValue) {
       this.state = ETriggerCellState.WaitReset;
+      /**TODO вынести формирование ITriggerCellResult в отдельную функцию */
       /**TODO сообщить что сработал триггер SET */
       const res: ITriggerCellResult = {
         date: new Date().toISOString(), /**TODO добавлять дату создания */
