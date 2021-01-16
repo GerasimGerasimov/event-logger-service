@@ -5,5 +5,9 @@ export enum ETriggerCellState {
 }
 
 export interface ITriggerCellResult {
-  trig: any;
+  date: string;
+  type: string;
+  trig: string;
+  describe: string;
+  tag: string;
 }

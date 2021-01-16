@@ -65,13 +65,11 @@ export class TTriggerFront extends TTriggerCell {
       this.state = ETriggerCellState.WaitReset;
       /**TODO сообщить что сработал триггер SET */
       const res: ITriggerCellResult = {
-        trig: {
-          event:this.triggerProps.triggerProc, //FRONT
-          input: this.args.get('input').Tag,
-          eventType: this.triggerProps.eventType,
-          describe: this.triggerProps.describe.comment['ru'],
-          date: new Date().toISOString()/**TODO добавлять дату создания */
-        }
+        date: new Date().toISOString(), /**TODO добавлять дату создания */
+        type: this.triggerProps.eventType,
+        trig: this.triggerProps.triggerProc.toString(), //FRONT /**TODO проверить что получаю строку */
+        describe: this.triggerProps.describe.comment['ru'], 
+        tag: this.args.get('input').Tag
       }
       return res;
     }
