@@ -67,7 +67,7 @@ export class TTriggerFront extends TTriggerCell {
       /**TODO сообщить что сработал триггер SET */
       const res: ITriggerCellResult = {
         date: new Date().toISOString(), /**TODO добавлять дату создания */
-        type: this.triggerProps.eventType,
+        type: `"${this.triggerProps.eventType}" input: ${input} >= setValue: ${setValue}`,
         trig: this.triggerProps.triggerProc.toString(), //FRONT /**TODO проверить что получаю строку */
         describe: this.triggerProps.describe.comment['ru'], 
         tag: this.args.get('input').Tag
@@ -94,10 +94,21 @@ export class TTriggerFront extends TTriggerCell {
     const setValue: number = setCondition.getConditionValue(args)
     const input = args.get('input')
     
-    this.state = (input >= setValue)
-    ? ETriggerCellState.WaitReset
-    : ETriggerCellState.WaitSet
-    return undefined;
+    //this.state = (input <= resetValue)
+    //? ETriggerCellState.WaitSet
+    //: ETriggerCellState.WaitReset
+    //return undefined;
+    if (input <= resetValue) {
+      this.state = ETriggerCellState.WaitSet;
+      return undefined
+    }
+    if (input >= setValue) {
+      this.state = ETriggerCellState.WaitReset;
+      return undefined
+    }
+    /**TODO что делать если input между resetValue и setValue  (resetValue< input < setValue)
+     * это актуально для НЕ boolean значений
+     */
   }
 
 }

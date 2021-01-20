@@ -3,13 +3,12 @@
     {
       "tags":{
         "input":"RAM/DIN.2(C2_AC)",
-        "arg1":"RAM/DIN.0(C1_AC)",
-        "arg2":"RAM/RINSL"
+        "arg1":"RAM/DIN.0(C1_AC)"
       },
       "eventType":"alarm",
       "trigger":{
         "type":"FRONT",
-        "setCondition":"arg2",
+        "setCondition":"1",
         "resetCondition":"0",
         "tolerance": "0"
       },

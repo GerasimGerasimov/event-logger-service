@@ -47,6 +47,7 @@ export class TTriggers {
         res.add(event)
       }
     })
+    console.log(res)
     return res;
   }
 }

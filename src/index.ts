@@ -20,9 +20,14 @@ const Triggers = new TTriggers({
         positions: DevicesPositionSource});
 const data = validation(dataset);//data = U1:{U1:RAM{...}}
 fillTriggersTagsValues(data, Triggers);
+data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '0';
 fillTriggersTagsValues(data, Triggers);
+data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '1';
 fillTriggersTagsValues(data, Triggers);
-
+data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '0';
+fillTriggersTagsValues(data, Triggers);
+data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '1';
+fillTriggersTagsValues(data, Triggers);
 //setValuesToTriggers(data, Triggers);
 
 console.log('event-logger-service stoped')

@@ -10,7 +10,7 @@ export class TTriggerToggle extends TTriggerCell {
   }
   
   public getTrigEvent(args: Map<string, TArg>): ITriggerCellResult | undefined {
-    const trig: ITriggerCellResult = {trig:''};
+    const trig: ITriggerCellResult = undefined;
     return trig;
   }
 
