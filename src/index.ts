@@ -4,7 +4,7 @@ import TEventsSource from './EventsSource/TEventsSource';
 import { HttpServer } from './server/httpserver';
 import { validation } from './Test/controller';
 import { dataset } from './Test/dataset';
-import { fillTriggersTagsValues } from './Test/deviceparser';
+import { doTriggers } from './Test/deviceparser';
 import {TTriggersTemplate, createTemplateOfTriggersGroup } from './Triggers/Group/TriggersTemplate';
 import { TTriggers } from './Triggers/Triggers';
 
@@ -19,15 +19,15 @@ const Triggers = new TTriggers({
       events: EventsSource,
         positions: DevicesPositionSource});
 const data = validation(dataset);//data = U1:{U1:RAM{...}}
-fillTriggersTagsValues(data, Triggers);
+doTriggers(data, Triggers);
 data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '0';
-fillTriggersTagsValues(data, Triggers);
+doTriggers(data, Triggers);
 data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '1';
-fillTriggersTagsValues(data, Triggers);
+doTriggers(data, Triggers);
 data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '0';
-fillTriggersTagsValues(data, Triggers);
+doTriggers(data, Triggers);
 data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '1';
-fillTriggersTagsValues(data, Triggers);
+doTriggers(data, Triggers);
 //setValuesToTriggers(data, Triggers);
 
 console.log('event-logger-service stoped')

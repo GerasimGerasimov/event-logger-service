@@ -7,7 +7,7 @@ class TPositionAndSection {
   section: string = ''
 }
 
-export function fillTriggersTagsValues(data: any, Triggers: TTriggers) {
+export function doTriggers(data: any, Triggers: TTriggers) {
   Triggers.fillArgs(data);
   const res: Set<ITriggerCellResult> = Triggers.getTriggersEvent();
 }
