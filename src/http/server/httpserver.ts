@@ -1,7 +1,7 @@
 import http = require('http');
 import express = require("express");
 import bodyParser = require('body-parser');
-import * as Utils from '../helpers/utils';
+import * as Utils from '../../helpers/utils';
 
 const HostsDir: string = Utils.getAbsDirPath('');
 

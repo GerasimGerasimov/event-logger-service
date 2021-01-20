@@ -1,7 +1,7 @@
 console.log('event-logger-service started');
 import TDevicesPositionSource from './DevicesSource/TDevicesPositionSource';
 import TEventsSource from './EventsSource/TEventsSource';
-import { HttpServer } from './server/httpserver';
+import { HttpServer } from './http/server/httpserver';
 import { validation } from './Test/controller';
 import { dataset } from './Test/dataset';
 import { doTriggers } from './Test/deviceparser';

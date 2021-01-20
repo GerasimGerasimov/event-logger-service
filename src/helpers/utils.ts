@@ -74,3 +74,11 @@ export function isValueInEnum( Enum:any, Value: any): string {
     }
     return res;
 }
+
+export function isEmpty(obj: Object): boolean {
+    for (let key in obj) {
+      // если тело цикла начнет выполняться - значит в объекте есть свойства
+      return false;
+    }
+    return true;
+  }
