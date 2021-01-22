@@ -8,9 +8,10 @@ class TPositionAndSection {
   section: string = ''
 }
 
-export function doTriggers(data: any, Triggers: TTriggers) {
+export function doTriggers(data: any, Triggers: TTriggers): Set<IEvent> {
   Triggers.fillArgs(data);
   const res: Set<IEvent> = Triggers.getTriggersEvent();
+  return res;
 }
 
 export interface ITagAddress {

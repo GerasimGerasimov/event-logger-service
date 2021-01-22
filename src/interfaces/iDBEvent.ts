@@ -9,3 +9,11 @@ export interface IEvent {
     todo: string;
   }
 }
+
+export const EventScheme = `
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      date TEXT,
+      type TEXT,
+      trig TEXT,
+      tag TEXT,
+      details TEXT`
