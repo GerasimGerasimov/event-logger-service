@@ -1,6 +1,7 @@
+import { IEvent } from "../../interfaces/iDBEvent";
 import { TArg } from "../Args/TArg";
 import { TCondition, TTriggerProps } from "../Trigger/TTriggerProps";
-import { ETriggerCellState, ITriggerCellResult } from "./iTreggerCell";
+import { ETriggerCellState} from "./iTreggerCell";
 import { TTriggerCell } from "./TTriggerCell";
 
 export class TTriggerFront extends TTriggerCell {
@@ -15,9 +16,9 @@ export class TTriggerFront extends TTriggerCell {
     this.setInitialState();
   }
   
-  public getTrigEvent(args: Map<string, TArg>): ITriggerCellResult | undefined {
+  public getTrigEvent(args: Map<string, TArg>): IEvent | undefined {
     this.args = args;
-    const trig: ITriggerCellResult = this.doStateAction();
+    const trig: IEvent = this.doStateAction();
     return trig;
   }
 
@@ -41,7 +42,7 @@ export class TTriggerFront extends TTriggerCell {
     return res
   }
 
-  private doStateAction():ITriggerCellResult | undefined {
+  private doStateAction():IEvent | undefined {
     try {
         const values: Map<string, number> = this.getArgsValues();
         switch (this.state) {
@@ -57,20 +58,24 @@ export class TTriggerFront extends TTriggerCell {
     }
   }
 
-  private waitChangeStateToSet(args: Map<string, number>): ITriggerCellResult | undefined {
+  private waitChangeStateToSet(args: Map<string, number>): IEvent | undefined {
     const input = args.get('input')
     const setCondition= this.triggerProps.setCondition;
     const setValue: number = setCondition.getConditionValue(args)
     if (input >= setValue) {
       this.state = ETriggerCellState.WaitReset;
-      /**TODO вынести формирование ITriggerCellResult в отдельную функцию */
+      /**TODO вынести формирование IEvent в отдельную функцию */
       /**TODO сообщить что сработал триггер SET */
-      const res: ITriggerCellResult = {
+      const res: IEvent = {
         date: new Date().toISOString(), /**TODO добавлять дату создания */
-        type: `"${this.triggerProps.eventType}" input: ${input} >= setValue: ${setValue}`,
+        type: this.triggerProps.eventType,
         trig: this.triggerProps.triggerProc.toString(), //FRONT /**TODO проверить что получаю строку */
-        describe: this.triggerProps.describe.comment['ru'], 
-        tag: this.args.get('input').Tag
+        tag: this.args.get('input').Tag,
+        details: {
+          initialValue: `input: ${input} >= setValue: ${setValue}`,
+          comment: this.triggerProps.describe.comment['ru'],
+          todo:''
+        }
       }
       return res;
     }

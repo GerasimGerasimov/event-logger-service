@@ -1,6 +1,6 @@
+import { IEvent } from "../../interfaces/iDBEvent";
 import { ArgFactory, TArg } from "../Args/TArg";
 import { IArgInfo } from "../iTriggers";
-import { ITriggerCellResult } from "../TriggerCell/iTreggerCell";
 import { TriggerCellFactory } from "../TriggerCell/TriggerCell";
 import { TTriggerCell } from "../TriggerCell/TTriggerCell";
 import TTriggerTemplate from "./TTriggerTemplate";
@@ -29,7 +29,7 @@ export class TTrigger {
     })
   }
 
-  public getTriggerEvent(): ITriggerCellResult | undefined {
+  public getTriggerEvent(): IEvent | undefined {
     //TODO установка состояния в зависимости от внешних условий
     try {
       this.isArgsValid();
@@ -48,7 +48,7 @@ export class TTrigger {
     }
   }
 
-  private getCellTrigEvent(args: Map<string, TArg>): ITriggerCellResult | undefined {
+  private getCellTrigEvent(args: Map<string, TArg>): IEvent | undefined {
     return this.TriggerCell.getTrigEvent(args);
   }
 

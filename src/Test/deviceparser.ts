@@ -1,6 +1,7 @@
 import { TTriggers } from "../Triggers/Triggers";
 import { getArrFromDelimitedStr } from "../helpers/utils";
-import { ITriggerCellResult } from "../Triggers/TriggerCell/iTreggerCell";
+import { IEvent } from ".././interfaces/iDBEvent";
+
 
 class TPositionAndSection {
   position: string = '';
@@ -9,7 +10,7 @@ class TPositionAndSection {
 
 export function doTriggers(data: any, Triggers: TTriggers) {
   Triggers.fillArgs(data);
-  const res: Set<ITriggerCellResult> = Triggers.getTriggersEvent();
+  const res: Set<IEvent> = Triggers.getTriggersEvent();
 }
 
 export interface ITagAddress {

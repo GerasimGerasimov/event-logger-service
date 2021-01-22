@@ -1,8 +1,8 @@
+import { IEvent } from "../interfaces/iDBEvent";
 import TDevicesPositionSource from "../DevicesSource/TDevicesPositionSource";
 import TEventsSource from "../EventsSource/TEventsSource";
 import { TTriggersTemplate } from "./Group/TriggersTemplate";
 import { TTrigger } from "./Trigger/TTrigger";
-import { ITriggerCellResult } from "./TriggerCell/iTreggerCell";
 
 interface ICreateTriggersProps {
   templates: Map<string, TTriggersTemplate>,
@@ -39,10 +39,10 @@ export class TTriggers {
     })
   }
   
-  public getTriggersEvent(): Set<ITriggerCellResult>{
-    const res:Set<ITriggerCellResult> = new Set()
+  public getTriggersEvent(): Set<IEvent>{
+    const res:Set<IEvent> = new Set()
     this.triggers.forEach(trigger => {
-      const event: ITriggerCellResult | undefined = trigger.getTriggerEvent();
+      const event: IEvent | undefined = trigger.getTriggerEvent();
       if (event !== undefined) {
         res.add(event)
       }

@@ -1,6 +1,6 @@
+import { IEvent } from "../../interfaces/iDBEvent";
 import { TArg } from "../Args/TArg";
 import { TTriggerProps } from "../Trigger/TTriggerProps";
-import { ITriggerCellResult } from "./iTreggerCell";
 import { TTriggerCell } from "./TTriggerCell";
 
 export class TTriggerRear extends TTriggerCell {
@@ -9,8 +9,8 @@ export class TTriggerRear extends TTriggerCell {
     super();
   }
 
-  public getTrigEvent(args: Map<string, TArg>): ITriggerCellResult | undefined {
-    const trig: ITriggerCellResult = undefined;
+  public getTrigEvent(args: Map<string, TArg>): IEvent | undefined {
+    const trig: IEvent = undefined;
     return trig;
   }
 
