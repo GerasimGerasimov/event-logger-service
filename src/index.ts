@@ -37,4 +37,14 @@ async function main(){
 
 main()
 
+let i = 1;
+function func(i: number) {
+  console.log(i)
+}
+
+setTimeout(function run () {
+  func(i++);
+  setTimeout(run, 1000);
+}, 100);
+
 console.log('event-logger-service stoped')
