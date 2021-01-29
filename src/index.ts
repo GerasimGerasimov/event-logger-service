@@ -41,7 +41,7 @@ function func(i: number) {
 
 setTimeout(function run () {
   func(i++);
-  setTimeout(run, 1000);
+  setTimeout(run, 5000);
 }, 100);
 
 console.log('event-logger-service stoped')

@@ -16,11 +16,11 @@ export default class EventsRepositoty {
   }
 
   public create(event: IEvent) {
-    const {date, type, tag, details} = {... event}
+    const {date, type, trig, tag, details} = {... event}
     const detailsJSON: string = JSON.stringify(details)
     return this.dao.run(
       'INSERT INTO events (date, type, trig, tag, details) VALUES (?, ?, ?, ?, ?)',
-      [date, type, tag, detailsJSON]
+      [date, type, trig, tag, detailsJSON]
     )
   }
 

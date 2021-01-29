@@ -16,28 +16,31 @@ export class TDBWritter {
   private async connectToDB(){
     console.log('start to create table')
     await this.eventsRepo.createTable();
+    console.log('table is created')
     console.log('start row count:', await this.eventsRepo.getRowCount())
     this.connected = true;
   }
 
   public async write(values: Set<IEvent>){
-      if (! this.isConnected) {
-        await this.connectToDB();
-      }
-      try {
-        await this.dao.run('BEGIN TRANSACTION');
-        for (const value of values) {
-          console.log(`create record: ${value.date}, ${value.tag}`)
-          await this.eventsRepo.create(value)
+      if (this.isConnected) {
+        try {
+          await this.dao.run('BEGIN TRANSACTION');
+          for (const value of values) {
+            console.log(`create record: ${value.date}, ${value.tag}`)
+            await this.eventsRepo.create(value)
+          }
+        } catch(e) {
+          console.log('DB Error :', e)
         }
         await this.dao.run('COMMIT TRANSACTION');
-      } catch(e) {
-        console.log('DB Error :', e)
+        console.log('end row count:', await this.eventsRepo.getRowCount())
+      } else {
+          await this.connectToDB();
+          return;
       }
-      console.log('end row count:', await this.eventsRepo.getRowCount())
   }
 
-  private isConnected(): boolean {
+  private get isConnected(): boolean {
     return this.connected;
   }
 }
