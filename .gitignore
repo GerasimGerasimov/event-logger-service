@@ -82,7 +82,10 @@ typings/
 .nuxt
 dist
 build
+# игнорирую папку DB
 db
+# но НЕ игнорирую папку db вложенную в src
+!src/db
 
 # Gatsby files
 .cache/
