@@ -25,21 +25,18 @@ const data = validation(dataset);
 
 async function main(){
     await DBWritter.write(doTriggers(data, Triggers))
-    data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '0';
-    await DBWritter.write(doTriggers(data, Triggers))
-    data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '1';
-    await DBWritter.write(doTriggers(data, Triggers))
-    data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '0';
-    await DBWritter.write(doTriggers(data, Triggers))
-    data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = '1';
-    await DBWritter.write(doTriggers(data, Triggers))
 }
 
-main()
+//main()
 
 let i = 1;
 function func(i: number) {
-  console.log(i)
+  console.log(i, data.U1['U1:RAM'].data['DIN.2(C2_AC)'])
+  data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = 
+    (data.U1['U1:RAM'].data['DIN.2(C2_AC)'] == 1)
+    ? '0'
+    : '1'
+  main()
 }
 
 setTimeout(function run () {
