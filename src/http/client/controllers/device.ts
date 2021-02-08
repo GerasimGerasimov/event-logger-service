@@ -1,4 +1,4 @@
-const HOST: string = `${window.location.protocol}//${window.location.hostname}`;
+const HOST: string = `localhost`;
 const urlDevicesValuesGet: string = `${HOST}:5004/v1/devices/`;
 const urlDevicesValuesWrite: string = `${HOST}:5004/v1/values/`;
 const urlDevicesInfo: string = `${HOST}:5004/v1/info/`;

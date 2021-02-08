@@ -9,6 +9,7 @@ import { dataset } from './Test/dataset';
 import { doTriggers } from './Test/deviceparser';
 import {TTriggersTemplate, createTemplateOfTriggersGroup } from './Triggers/Group/TriggersTemplate';
 import { TTriggers } from './Triggers/Triggers';
+import { TDevicesValueStore } from './http/client/devices';
 
 //const Server: HttpServer = new HttpServer();
 const DBWritter = new TDBWritter();
@@ -21,6 +22,9 @@ const Triggers = new TTriggers({
     templates: TriggersTemplates,
       events: EventsSource,
         positions: DevicesPositionSource});
+
+const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
+
 const data = validation(dataset);
 
 async function main(){
