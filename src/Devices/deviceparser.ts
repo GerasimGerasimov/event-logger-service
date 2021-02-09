@@ -1,6 +1,7 @@
 import { TTriggers } from "../Triggers/Triggers";
 import { getArrFromDelimitedStr } from "../helpers/utils";
-import { IEvent } from ".././interfaces/iDBEvent";
+import { IEvent } from "../interfaces/iDBEvent";
+import { ITagAddress } from "./ITagAddress";
 
 
 class TPositionAndSection {
@@ -12,12 +13,6 @@ export function doTriggers(data: any, Triggers: TTriggers): Set<IEvent> {
   Triggers.fillArgs(data);
   const res: Set<IEvent> = Triggers.getTriggersEvent();
   return res;
-}
-
-export interface ITagAddress {
-  position: string;
-  section: string;
-  tag: string;
 }
 
 //отдаёт значение по тегу U1/RAM/Iexc

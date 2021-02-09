@@ -3,6 +3,10 @@
         "group0":{
             "devices":["U1"],
             "source": "icm.json"
+        },
+        "group1":{
+            "devices":["U2"],
+            "source": "icm.json"
         }
     }
 }

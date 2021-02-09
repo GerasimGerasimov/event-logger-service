@@ -1,3 +1,4 @@
+import { ITagAddress } from "../../Devices/ITagAddress";
 import { IEvent } from "../../interfaces/iDBEvent";
 import { ArgFactory, TArg } from "../Args/TArg";
 import { IArgInfo } from "../iTriggers";
@@ -52,4 +53,32 @@ export class TTrigger {
     return this.TriggerCell.getTrigEvent(args);
   }
 
+  //[ {"U1":{"RAM":"ALL"}}, {"U2":{"FLASH":"ALL"}} ]
+  public getRequest(src: Map<string, Map<string, Set<string>>>): Map<string, Map<string, Set<string>>> {
+    let req: Map<string, Map<string, Set<string>>> = src;//new Map();
+    this.args.forEach((arg:TArg) => {
+      const tag: ITagAddress | undefined = arg.TagAddr;
+      if (tag) {
+        console.log(tag);
+        req = this.fillReq(tag, req)
+      }
+    })
+    return req
+  }
+
+  private fillReq(data: ITagAddress, src: Map<string, Map<string, Set<string>>>): Map<string, Map<string, Set<string>>> {
+    const res: Map<string, Map<string, Set<string>>> = src;
+    if (!res.has(data.position)) {
+      res.set(data.position, new Map());
+    }
+    const position: Map<string, Set<string>> = res.get(data.position);
+    if (!position.has(data.section)) {
+      position.set(data.section, new Set())
+    }
+    const sectionTags: Set<string> = position.get(data.section);
+    sectionTags.add(data.tag);
+    position.set(data.section, sectionTags);
+    res.set(data.position, position);
+    return res;
+  }
 }

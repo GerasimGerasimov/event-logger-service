@@ -50,4 +50,33 @@ export class TTriggers {
     console.log(res)
     return res;
   }
+
+  //"U1":{
+  //  "RAM":["Usgz","DEX_STATE"],
+  //[ {"U1":{"RAM":"ALL"}}, {"U2":{"FLASH":"ALL"}}
+  public getReqiests(): Array<any> {
+    let req: Map<string, Map<string, Set<string>>> = new Map();
+    this.triggers.forEach( (trigger: TTrigger) => {
+      req = trigger.getRequest(req)
+    })
+    return this.convertMapRequestToReqObject(req)
+  }
+
+  //на вход получаю мап, на выходе должен быть массив объектов запросов
+  //элемент ов в массиве стоклько сколько position и секций в нём
+  private convertMapRequestToReqObject(src: Map<string, Map<string, Set<string>>>): Array<any> {
+    const res: Array<any> = []
+    for (const [position, value] of src.entries()) {
+      const req = {};
+      console.log(position, value);
+      for (const [section, tags] of value.entries()) {
+        const args: Array<string> = [... tags]
+        req[position] = {
+          [section] : args
+        }
+        res.push(req)
+      }
+    }
+    return res;
+  }
 }

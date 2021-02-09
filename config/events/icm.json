@@ -20,6 +20,27 @@
           "ru":""
         }
       }
+    },
+    {
+      "tags":{
+        "input":"RAM/PWR",
+        "arg1":"RAM/RINSL"
+      },
+      "eventType":"alarm",
+      "trigger":{
+        "type":"FRONT",
+        "setCondition":"1",
+        "resetCondition":"0",
+        "tolerance": "0"
+      },
+      "description":{
+        "comment":{
+          "ru":"Нет исправных регуляторов"
+        },
+        "detail":{
+          "ru":""
+        }
+      }
     }
   ]
 }

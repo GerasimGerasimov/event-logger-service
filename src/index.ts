@@ -4,9 +4,9 @@ import TDevicesPositionSource from './DevicesSource/TDevicesPositionSource';
 import TEventsSource from './EventsSource/TEventsSource';
 import { HttpServer } from './http/server/httpserver';
 import { IEvent } from './interfaces/iDBEvent';
-import { validation } from './Test/controller';
-import { dataset } from './Test/dataset';
-import { doTriggers } from './Test/deviceparser';
+import { validation } from './Devices/controller';
+import { dataset } from './Devices/dataset';
+import { doTriggers } from './Devices/deviceparser';
 import {TTriggersTemplate, createTemplateOfTriggersGroup } from './Triggers/Group/TriggersTemplate';
 import { TTriggers } from './Triggers/Triggers';
 import { TDevicesValueStore } from './http/client/devices';
@@ -26,6 +26,10 @@ const Triggers = new TTriggers({
 const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
 
 const data = validation(dataset);
+/**TODO сформировать запросы к Tagger*/
+
+const reg: Array<any> = Triggers.getReqiests()
+
 
 async function main(){
     await DBWritter.write(doTriggers(data, Triggers))

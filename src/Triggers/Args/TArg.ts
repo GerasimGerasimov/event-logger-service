@@ -1,4 +1,5 @@
-import { getTagValue, ITagAddress } from "../../Test/deviceparser";
+import { getTagValue } from "../../Devices/deviceparser";
+import { ITagAddress } from "../../Devices/ITagAddress";
 import { IArgInfo } from "../iTriggers";
 
 export abstract class TArg {
@@ -7,6 +8,7 @@ export abstract class TArg {
   public abstract get Value(): number;
   public abstract setValue(data: any);
   public abstract get Tag(): string;
+  public abstract get TagAddr(): ITagAddress | undefined; 
 
 }
 
@@ -34,6 +36,10 @@ export class TArgTag extends TArg {
   public get Value(): number {
     return this.value;
   }
+
+  public get TagAddr(): ITagAddress {
+    return this.tagAddr
+  }
 }
 
 export class TArgConst extends TArg {
@@ -51,6 +57,10 @@ export class TArgConst extends TArg {
 
   public get Value(): number {
     return this.value;
+  }
+
+  public get TagAddr(): undefined {
+    return undefined
   }
 }
 
