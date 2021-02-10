@@ -9,21 +9,16 @@ export class TDevicesValueStore {
         tasks: [] as Array<object>
     }
 
-    constructor() {
-        console.log('!!!')
-        this.createTasksAndStartDataLoop()
+    constructor(reqs: Array<any>) {
+        this.createTasks(reqs);
+        this.startAutoReloadData();
     }
 
-    private createTasksAndStartDataLoop () {
-        //1. создать запросы
+    private createTasks(reqs: Array<any>) {
         this.Tasks = {
             index: 0,
-            tasks: []//devicesInfoStore.createRequests()
-            /**TODO надо повторить жту функцию из 
-            dexs-operator-panel\src\store\devices\devicesinfo.ts */
+            tasks: reqs
         }
-        //2. запустить цикл чтения данных
-        this.startAutoReloadData();
     }
 
 

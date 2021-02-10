@@ -23,12 +23,12 @@ const Triggers = new TTriggers({
       events: EventsSource,
         positions: DevicesPositionSource});
 
-const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
+const reqsToTagger: Array<any> = Triggers.getReqiests()
+const devicesValueStore:TDevicesValueStore = new TDevicesValueStore(reqsToTagger);
 
 const data = validation(dataset);
-/**TODO сформировать запросы к Tagger*/
 
-const reg: Array<any> = Triggers.getReqiests()
+
 
 
 async function main(){

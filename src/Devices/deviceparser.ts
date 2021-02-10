@@ -19,8 +19,15 @@ export function doTriggers(data: any, Triggers: TTriggers): Set<IEvent> {
 export function getTagValue( tagAddr: ITagAddress, data: any): number | undefined {
   const {position, section, tag} = {...tagAddr}
   const SectionAtPosition: string = `${position}:${section}`;
-  const value: string = data[position][SectionAtPosition].data[tag] || undefined ;
-  return Number(value);
+  const value: number | undefined = 
+        (data[position]) 
+          ? (data[position][SectionAtPosition])
+            ? (data[position][SectionAtPosition].data[tag])
+              ? Number(data[position][SectionAtPosition].data[tag])
+              : undefined
+            : undefined
+          : undefined
+  return value;
 }
 
 
