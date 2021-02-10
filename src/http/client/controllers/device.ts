@@ -1,4 +1,6 @@
-const HOST: string = `localhost`;
+const fetch = require('node-fetch');
+
+const HOST: string = `http://localhost`;
 const urlDevicesValuesGet: string = `${HOST}:5004/v1/devices/`;
 const urlDevicesValuesWrite: string = `${HOST}:5004/v1/values/`;
 const urlDevicesInfo: string = `${HOST}:5004/v1/info/`;
