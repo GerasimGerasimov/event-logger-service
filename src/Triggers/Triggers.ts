@@ -19,14 +19,10 @@ export class TTriggers {
 
   private createTriggersOfDevicesFromTemplates(props: ICreateTriggersProps): Array<TTrigger> {
     const triggers: Array<TTrigger> = [];
-    //templates = Map<'*.json', Set<TTriggerTemplate>} 
-    //events    = Devices<Array> = ['icm.json',...]
-    //positions = EventsInDevs<Map<position, *.json> = <'U1', 'icm.json'>
     for (const [position, source] of props.positions.EventsInDevs.entries()) {
       const TriggersTepltate: TTriggersTemplate = props.templates.get(source);
       TriggersTepltate.Triggers.forEach(triggerTemplate => {
         const trigger: TTrigger = new TTrigger(position, triggerTemplate);
-        /*TODO заполнить данными создаваемые триггеры*/
         triggers.push(trigger);
       })
     }

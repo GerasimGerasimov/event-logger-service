@@ -34,14 +34,14 @@ async function* asyncGenerator() {
   }
 }
 
+/*TODO оказывается триггер не "защёлкивается", и сколько раз прочитали что PWR = 1,
+столько и записей будет в базе. Вернее надо чтобы в Set попадали только новые события*/
 async function main() {
   try {
     await devicesInfoStore.getDevicesInfo();
     devicesValueStore.createTasks(Triggers.getReqiests());
-    /*TODO надо спрямить пути доступа к параметрам, так как все данные есть */
-    //Triggers.bindParametersToTriggers()
     for await (let i of asyncGenerator()) {
-      console.log(i);//сюда попадаю когда даные прочитаны
+      console.log(i);//сюда попадаю когда данные прочитаны
       const values: Set<IEvent> = doTriggers(data, Triggers);
       await DBWritter.write(values)
     }
@@ -52,25 +52,3 @@ async function main() {
 }
 
 main()
-
-/*
-async function _main(){
-    await DBWritter.write(doTriggers(data, Triggers))
-}
-
-
-let i = 1;
-function func(i: number) {
-  console.log(i, data.U1['U1:RAM'].data['DIN.2(C2_AC)'])
-  data.U1['U1:RAM'].data['DIN.2(C2_AC)'] = 
-    (data.U1['U1:RAM'].data['DIN.2(C2_AC)'] == 1)
-    ? '0'
-    : '1'
-  _main()
-}
-
-setTimeout(function run () {
-  func(i++);
-  setTimeout(run, 5000);
-}, 100);
-*/

@@ -26,13 +26,6 @@ export class TTriggerFront extends TTriggerCell {
     this.state = ETriggerCellState.WaitValidValues;
   }
 
-  /*TODO
-    1) если триггер в WaitValidValues то (раз сюда попали значит они Валидны)
-       то надо "предзарядить" триггер на основании текущих значений аргументов
-       чтобы небыло ложного срабатывания. После этого действия, состояние
-       установится либо в WaitSet либо в WaitReset
-    2) Устаналивать противоположенное состение в зависимости от условий WaitSet либо в WaitReset
-    */
   private getArgsValues(): Map<string, number> {
     const res: Map<string, number> = new Map()
     for ( const [key, arg] of this.args.entries()) {

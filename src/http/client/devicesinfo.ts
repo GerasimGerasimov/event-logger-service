@@ -142,8 +142,6 @@ export class TDevicesInfoStore {
     private parseDevicesInfoRAWData(DevicesInfo: any) {
         for (const key in DevicesInfo) {
             let info: TDeviceInfoRAW = DevicesInfo[key];
-            //TODO поле Pages может быть пустым, поэтому его надо
-            //"собрать" в такое ко-во вкладок сколько есть секций (flash, ram, cd)
             this.addDefaultPages(info);
             this.parseParameters(info);
             this.DevicesInfo.set(key, info);

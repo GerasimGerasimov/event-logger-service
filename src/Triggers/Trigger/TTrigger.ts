@@ -31,7 +31,6 @@ export class TTrigger {
   }
 
   public getTriggerEvent(): IEvent | undefined {
-    //TODO установка состояния в зависимости от внешних условий
     try {
       this.isArgsValid();
       return this.getCellTrigEvent(this.args);
