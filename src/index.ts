@@ -32,8 +32,6 @@ async function* asyncGenerator() {
   }
 }
 
-/*TODO оказывается триггер не "защёлкивается", и сколько раз прочитали что PWR = 1,
-столько и записей будет в базе. Вернее надо чтобы в Set попадали только новые события*/
 async function main() {
   try {
     await devicesInfoStore.getDevicesInfo();

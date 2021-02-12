@@ -77,7 +77,7 @@ export class TTriggerFront extends TTriggerCell {
 
   private waitChangeStateToReset(args: Map<string, number>): undefined {
     const input = args.get('input')
-    const resetCondition= this.triggerProps.setCondition;
+    const resetCondition= this.triggerProps.resetCondition;
     const resetValue: number = resetCondition.getConditionValue(args)
     if (input <= resetValue) {
       this.state = ETriggerCellState.WaitSet;
