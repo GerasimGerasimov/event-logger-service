@@ -26,6 +26,14 @@ const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
 
 const data = validation(dataset);
 
+async function* asyncGenerator() {
+  let i = 0;
+  while (true) {
+    await delay(1000);
+    yield i++;
+  }
+}
+
 async function main() {
   try {
     await devicesInfoStore.getDevicesInfo();
@@ -33,6 +41,9 @@ async function main() {
     devicesValueStore.startAutoReloadData();
     /*TODO цикл обновления данных. Если данные обновились то проверить тригеры */
     /*TODO если есть что записать в базу - то записать */
+    for await (let i of asyncGenerator()) {
+      console.log(i);
+    }
   } catch (e) {
     console.log(e)
   }
@@ -62,6 +73,11 @@ setTimeout(function run () {
 
 console.log('event-logger-service stoped')
 
+async function delay(ms: number): Promise<any> {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+}
 /*
 Привет асинхронного цикла на генераторе
 async function* asyncGenerator(max: number) {
