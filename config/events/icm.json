@@ -2,8 +2,7 @@
   "events":[
     {
       "tags":{
-        "input":"RAM/DIN.2(C2_AC)",
-        "arg1":"RAM/DIN.0(C1_AC)"
+        "input":"RAM/PWR"
       },
       "eventType":"alarm",
       "trigger":{
@@ -14,28 +13,7 @@
       },
       "description":{
         "comment":{
-          "ru":"Нет исправных регуляторов"
-        },
-        "detail":{
-          "ru":""
-        }
-      }
-    },
-    {
-      "tags":{
-        "input":"RAM/PWR",
-        "arg1":"RAM/RINSL"
-      },
-      "eventType":"alarm",
-      "trigger":{
-        "type":"FRONT",
-        "setCondition":"1",
-        "resetCondition":"0",
-        "tolerance": "0"
-      },
-      "description":{
-        "comment":{
-          "ru":"Нет исправных регуляторов"
+          "ru":"включение преобразователя"
         },
         "detail":{
           "ru":""
