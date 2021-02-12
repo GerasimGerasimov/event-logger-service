@@ -10,32 +10,40 @@ import { doTriggers } from './Devices/deviceparser';
 import {TTriggersTemplate, createTemplateOfTriggersGroup } from './Triggers/Group/TriggersTemplate';
 import { TTriggers } from './Triggers/Triggers';
 import { TDevicesValueStore } from './http/client/devices';
+import { devicesInfoStore } from './http/client/devicesinfo';
 
 //const Server: HttpServer = new HttpServer();
 const DBWritter = new TDBWritter();
 const EventsSource = new TEventsSource();
 const DevicesPositionSource = new TDevicesPositionSource()
 const TriggersTemplates: Map<string, TTriggersTemplate> = createTemplateOfTriggersGroup(EventsSource);
-/*TODO шаблоны триггеров подготовлены, наверно надо теперь сделать сами триггеры
-в которые будут интегрированы шаблоны*/
 const Triggers = new TTriggers({
     templates: TriggersTemplates,
       events: EventsSource,
         positions: DevicesPositionSource});
 
-const reqsToTagger: Array<any> = Triggers.getReqiests()
-const devicesValueStore:TDevicesValueStore = new TDevicesValueStore(reqsToTagger);
+const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
 
 const data = validation(dataset);
 
+async function main() {
+  try {
+    await devicesInfoStore.getDevicesInfo();
+    devicesValueStore.createTasks(Triggers.getReqiests());
+    devicesValueStore.startAutoReloadData();
+    /*TODO цикл обновления данных. Если данные обновились то проверить тригеры */
+    /*TODO если есть что записать в базу - то записать */
+  } catch (e) {
+    console.log(e)
+  }
+}
 
-
-
-async function main(){
+main()
+async function _main(){
     await DBWritter.write(doTriggers(data, Triggers))
 }
 
-//main()
+//_main()
 
 let i = 1;
 function func(i: number) {
@@ -44,7 +52,7 @@ function func(i: number) {
     (data.U1['U1:RAM'].data['DIN.2(C2_AC)'] == 1)
     ? '0'
     : '1'
-  main()
+  _main()
 }
 
 setTimeout(function run () {
@@ -53,3 +61,20 @@ setTimeout(function run () {
 }, 100);
 
 console.log('event-logger-service stoped')
+
+/*
+Привет асинхронного цикла на генераторе
+async function* asyncGenerator(max: number) {
+  let i = 0;
+  while (i < max) {
+    yield i++;
+  }
+}
+
+async function loop(){
+  for await (let i of asyncGenerator(2048)) {
+    console.log(i);
+    await (async ()=>{})();
+  }
+}
+*/

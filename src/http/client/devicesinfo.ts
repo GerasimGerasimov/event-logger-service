@@ -1,5 +1,3 @@
-//import { getArrFromDelimitedStr, isEmpty } from "/.././helpers/utils";
-//import { isEmpty } from "src/helpers/utils";
 import { getArrFromDelimitedStr, isEmpty  } from "../../helpers/utils";
 import DeviceController from "./controllers/device";
 
@@ -52,24 +50,16 @@ export class TDeviceInfoRAW {
 }
 
 export class TDevicesInfoStore {
-    loadState = 'FetchState.done';
     public DevicesInfo: Map<string, TDeviceInfoRAW> = new Map<string, TDeviceInfoRAW>();
 
     constructor() {
-        this.getDevicesInfo();
+        //this.getDevicesInfo();
     }
 
-    private async getDevicesInfo(){
-        this.loadState = 'FetchState.pending';
-        try {
-            const data = await DeviceController.getDevicesInfo();
-                this.loadState = 'FetchState.done';
-                const DevicesInfo: any = data || {};
-                this.parseDevicesInfoRAWData(DevicesInfo);
-        } catch (e) {
-                this.loadState = 'FetchState.error';
-                console.log(e);
-        }
+    public async getDevicesInfo(): Promise <void | Error>{
+        const data = await DeviceController.getDevicesInfo();
+        const DevicesInfo: any = data || {};
+        this.parseDevicesInfoRAWData(DevicesInfo);
     }
 
     //сканирует список тегов U1/RAM/Iexc
