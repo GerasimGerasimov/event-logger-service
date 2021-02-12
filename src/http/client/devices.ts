@@ -1,3 +1,4 @@
+import { delay } from '../../helpers/utils';
 import DeviceController from './controllers/device';
 import { devicesInfoStore } from './devicesinfo';
 
@@ -14,6 +15,11 @@ export class TDevicesValueStore {
         //this.startAutoReloadData();
     }
 
+    public async getOnceData() {
+        await delay(1000);
+        await this.getDeviceDataOnce(this.getNextTask)
+    }
+    
     public createTasks(reqs: Array<any>) {
         this.Tasks = {
             index: 0,
@@ -49,4 +55,20 @@ export class TDevicesValueStore {
         },
         10000)
     }
+
+    private getNextTask(): any {
+        const task: any = this.Tasks.tasks[this.Tasks.index]
+        if (++this.Tasks.index === this.Tasks.tasks.length) {
+            this.Tasks.index = 0;
+        }
+        return task;
+    }
+
+    private async getDeviceDataOnce(task: any) {
+        const data = await DeviceController.getData(task);
+        for( const key in data.data) {
+          devicesInfoStore.fillValuesFromReceivedData(data.data[key]);
+        }
+    }
+
 }

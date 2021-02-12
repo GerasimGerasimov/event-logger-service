@@ -22,6 +22,7 @@ export class TDBWritter {
   }
 
   public async write(values: Set<IEvent>){
+    if (values.size != 0) {
       if (this.isConnected) {
         try {
           await this.dao.run('BEGIN TRANSACTION');
@@ -38,6 +39,7 @@ export class TDBWritter {
           await this.connectToDB();
           return;
       }
+    }
   }
 
   private get isConnected(): boolean {

@@ -29,7 +29,7 @@ const data = validation(dataset);
 async function* asyncGenerator() {
   let i = 0;
   while (true) {
-    await delay(1000);
+    await devicesValueStore.getOnceData();
     yield i++;
   }
 }
@@ -38,23 +38,24 @@ async function main() {
   try {
     await devicesInfoStore.getDevicesInfo();
     devicesValueStore.createTasks(Triggers.getReqiests());
-    devicesValueStore.startAutoReloadData();
-    /*TODO цикл обновления данных. Если данные обновились то проверить тригеры */
-    /*TODO если есть что записать в базу - то записать */
     for await (let i of asyncGenerator()) {
-      console.log(i);
+      console.log(i);//сюда попадаю когда даные прочитаны
+      const values: Set<IEvent> = doTriggers(data, Triggers);
+      await DBWritter.write(values)
     }
   } catch (e) {
     console.log(e)
   }
+  console.log('event-logger-service stoped')
 }
 
 main()
+
+/*
 async function _main(){
     await DBWritter.write(doTriggers(data, Triggers))
 }
 
-//_main()
 
 let i = 1;
 function func(i: number) {
@@ -70,14 +71,9 @@ setTimeout(function run () {
   func(i++);
   setTimeout(run, 5000);
 }, 100);
+*/
 
-console.log('event-logger-service stoped')
 
-async function delay(ms: number): Promise<any> {
-  return new Promise((resolve, reject) => {
-    setTimeout(resolve, ms);
-  });
-}
 /*
 Привет асинхронного цикла на генераторе
 async function* asyncGenerator(max: number) {
