@@ -24,8 +24,6 @@ const Triggers = new TTriggers({
 
 const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
 
-const data = validation(dataset);
-
 async function* asyncGenerator() {
   let i = 0;
   while (true) {
@@ -42,7 +40,7 @@ async function main() {
     devicesValueStore.createTasks(Triggers.getReqiests());
     for await (let i of asyncGenerator()) {
       console.log(i);//сюда попадаю когда данные прочитаны
-      const values: Set<IEvent> = doTriggers(data, Triggers);
+      const values: Set<IEvent> = doTriggers(Triggers);
       await DBWritter.write(values)
     }
   } catch (e) {

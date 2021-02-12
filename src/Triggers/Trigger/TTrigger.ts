@@ -24,9 +24,9 @@ export class TTrigger {
     return res;
   }
 
-  public fillArgs(data: any) {
+  public fillArgs() {
     this.args.forEach(arg => {
-      arg.setValue(data);
+      arg.setValue();
     })
   }
 

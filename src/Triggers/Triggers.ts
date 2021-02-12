@@ -29,9 +29,9 @@ export class TTriggers {
     return triggers;
   }
 
-  public fillArgs(data: any) {
+  public fillArgs() {
     this.triggers.forEach(trigger => {
-      trigger.fillArgs(data);
+      trigger.fillArgs();
     })
   }
   

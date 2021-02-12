@@ -6,7 +6,7 @@ export abstract class TArg {
   protected value: number = undefined;
 
   public abstract get Value(): number;
-  public abstract setValue(data: any);
+  public abstract setValue();
   public abstract get Tag(): string;
   public abstract get TagAddr(): ITagAddress | undefined; 
 
@@ -29,8 +29,8 @@ export class TArgTag extends TArg {
     return this.tag;
   }
 
-  public setValue(data: any) {
-    this.value = getTagValue(this.tagAddr, data);
+  public setValue() {
+    this.value = getTagValue(this.tagAddr);
   }
 
   public get Value(): number {
@@ -53,7 +53,7 @@ export class TArgConst extends TArg {
     return 'TArgConst';
   }
 
-  public setValue(data: any) {}
+  public setValue() {}
 
   public get Value(): number {
     return this.value;
