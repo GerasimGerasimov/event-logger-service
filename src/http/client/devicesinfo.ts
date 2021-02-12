@@ -89,7 +89,7 @@ export class TDevicesInfoStore {
     }
 
     //отдаёт значение по тегу U1/RAM/Iexc
-    private getTagValue(request: string): string {
+    public getTagValue(request: string): string {
         const [position, section, tag] = getArrFromDelimitedStr(request,'/')
         const Position: any = this.DevicesInfo.get(position)!;
         const Tags: TParameters = Position.Tags[section.toLocaleLowerCase()];

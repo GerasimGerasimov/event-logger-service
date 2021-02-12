@@ -38,6 +38,8 @@ async function main() {
   try {
     await devicesInfoStore.getDevicesInfo();
     devicesValueStore.createTasks(Triggers.getReqiests());
+    /*TODO надо спрямить пути доступа к параметрам, так как все данные есть */
+    //Triggers.bindParametersToTriggers()
     for await (let i of asyncGenerator()) {
       console.log(i);//сюда попадаю когда даные прочитаны
       const values: Set<IEvent> = doTriggers(data, Triggers);
@@ -71,22 +73,4 @@ setTimeout(function run () {
   func(i++);
   setTimeout(run, 5000);
 }, 100);
-*/
-
-
-/*
-Привет асинхронного цикла на генераторе
-async function* asyncGenerator(max: number) {
-  let i = 0;
-  while (i < max) {
-    yield i++;
-  }
-}
-
-async function loop(){
-  for await (let i of asyncGenerator(2048)) {
-    console.log(i);
-    await (async ()=>{})();
-  }
-}
 */
