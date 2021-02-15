@@ -16,7 +16,7 @@ export class TDevicesValueStore {
     }
 
     public async getOnceData() {
-        await delay(1000);
+        await delay(100);
         await this.getDeviceDataOnce(this.getNextTask())
     }
     
