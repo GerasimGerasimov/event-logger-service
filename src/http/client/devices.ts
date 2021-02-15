@@ -14,12 +14,20 @@ export class TDevicesValueStore {
         //this.createTasks(reqs);
         //this.startAutoReloadData();
     }
+  
+    public async * asyncGenerator () {
+        let i = 0;
+        while (true) {
+          await this.getOnceData();
+          yield i++;
+        }
+      }
 
-    public async getOnceData() {
+    private async getOnceData() {
         await delay(100);
         await this.getDeviceDataOnce(this.getNextTask())
     }
-    
+
     public createTasks(reqs: Array<any>) {
         this.Tasks = {
             index: 0,
