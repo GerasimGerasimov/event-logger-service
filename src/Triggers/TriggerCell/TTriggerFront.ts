@@ -1,3 +1,4 @@
+import { nowDateTimeToDBStr } from "../../helpers/utils";
 import { IEvent } from "../../interfaces/iDBEvent";
 import { TArg } from "../Args/TArg";
 import { TCondition, TTriggerProps } from "../Trigger/TTriggerProps";
@@ -58,11 +59,10 @@ export class TTriggerFront extends TTriggerCell {
     if (input >= setValue) {
       this.state = ETriggerCellState.WaitReset;
       /**TODO вынести формирование IEvent в отдельную функцию */
-      /**TODO сообщить что сработал триггер SET */
       const res: IEvent = {
-        date: new Date().toISOString(), /**TODO добавлять дату создания */
+        date: nowDateTimeToDBStr(),
         type: this.triggerProps.eventType,
-        trig: this.triggerProps.triggerProc.toString(), //FRONT /**TODO проверить что получаю строку */
+        trig: this.triggerProps.triggerProc.toString(),
         tag: this.args.get('input').Tag,
         details: {
           initialValue: `input: ${input} >= setValue: ${setValue}`,

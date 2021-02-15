@@ -19,6 +19,26 @@
           "ru":""
         }
       }
+    },
+    {
+      "tags":{
+        "input":"RAM/Blank"
+      },
+      "eventType":"info",
+      "trigger":{
+        "type":"FRONT",
+        "setCondition":"1",
+        "resetCondition":"0",
+        "tolerance": "0"
+      },
+      "description":{
+        "comment":{
+          "ru":"гашение поля"
+        },
+        "detail":{
+          "ru":""
+        }
+      }
     }
   ]
 }
