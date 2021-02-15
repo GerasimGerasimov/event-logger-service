@@ -24,7 +24,7 @@ const Triggers = new TTriggers({
 
 const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
 
-async function main() {
+(async () => {
   try {
     await devicesInfoStore.getDevicesInfo();
     devicesValueStore.createTasks(Triggers.getReqiests());
@@ -37,6 +37,4 @@ async function main() {
     console.log(e)
   }
   console.log('event-logger-service stoped')
-}
-
-main()
+})();
