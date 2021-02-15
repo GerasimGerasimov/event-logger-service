@@ -9,6 +9,7 @@ import {TTriggersTemplate, createTemplateOfTriggersGroup } from './Triggers/Grou
 import { TTriggers } from './Triggers/Triggers';
 import { TDevicesValueStore } from './http/client/devices';
 import { devicesInfoStore } from './http/client/devicesinfo';
+import { delay } from './helpers/utils';
 
 //const Server: HttpServer = new HttpServer();
 const DBWritter = new TDBWritter();
@@ -26,13 +27,20 @@ const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
   try {
     await devicesInfoStore.getDevicesInfo();
     devicesValueStore.createTasks(Triggers.getReqiests());
-    for await (let i of devicesValueStore.asyncGenerator()) {
-      console.log(i);//сюда попадаю когда данные прочитаны
-      const values: Set<IEvent> = doTriggers(Triggers);
-      await DBWritter.write(values)
+    while (true) {
+      try {
+        for await (let i of devicesValueStore.asyncGenerator()) {
+          console.log(i);//сюда попадаю когда данные прочитаны
+          const values: Set<IEvent> = doTriggers(Triggers);
+          await DBWritter.write(values)
+        }
+      } catch (e) {
+        console.log('inner:', e);
+      }
+      await delay(1000);
     }
   } catch (e) {
-    console.log(e)
+    console.log('extern:', e);
   }
   console.log('event-logger-service stoped')
 })();

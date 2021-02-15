@@ -25,6 +25,7 @@ export class TDevicesValueStore {
 
     private async getOnceData() {
         await delay(100);
+        /**TODO сделать TimeOut для Fetch */
         await this.getDeviceDataOnce(this.getNextTask())
     }
 
