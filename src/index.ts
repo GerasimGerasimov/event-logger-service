@@ -4,8 +4,6 @@ import TDevicesPositionSource from './DevicesSource/TDevicesPositionSource';
 import TEventsSource from './EventsSource/TEventsSource';
 import { HttpServer } from './http/server/httpserver';
 import { IEvent } from './interfaces/iDBEvent';
-import { validation } from './Devices/controller';
-import { dataset } from './Devices/dataset';
 import { doTriggers } from './Devices/deviceparser';
 import {TTriggersTemplate, createTemplateOfTriggersGroup } from './Triggers/Group/TriggersTemplate';
 import { TTriggers } from './Triggers/Triggers';
