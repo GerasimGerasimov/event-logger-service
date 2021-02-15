@@ -1,4 +1,3 @@
-import { nowDateTimeToDBStr } from "../../helpers/utils";
 import { IEvent } from "../../interfaces/iDBEvent";
 import { TArg } from "../Args/TArg";
 import { TCondition, TTriggerProps } from "../Trigger/TTriggerProps";
@@ -7,8 +6,6 @@ import { TTriggerCell } from "./TTriggerCell";
 
 export class TTriggerFront extends TTriggerCell {
   
-  private triggerProps: TTriggerProps;
-  private args: Map<string, TArg>;
   private state: ETriggerCellState;
 
   constructor (props: TTriggerProps) {
@@ -25,15 +22,6 @@ export class TTriggerFront extends TTriggerCell {
 
   public setInitialState(): void {
     this.state = ETriggerCellState.WaitValidValues;
-  }
-
-  private getArgsValues(): Map<string, number> {
-    const res: Map<string, number> = new Map()
-    for ( const [key, arg] of this.args.entries()) {
-      const value = arg.Value
-      res.set(key, value)
-    }
-    return res
   }
 
   private doStateAction():IEvent | undefined {
@@ -58,18 +46,7 @@ export class TTriggerFront extends TTriggerCell {
     const setValue: number = setCondition.getConditionValue(args)
     if (input >= setValue) {
       this.state = ETriggerCellState.WaitReset;
-      /**TODO вынести формирование IEvent в отдельную функцию */
-      const res: IEvent = {
-        date: nowDateTimeToDBStr(),
-        type: this.triggerProps.eventType,
-        trig: this.triggerProps.triggerProc.toString(),
-        tag: this.args.get('input').Tag,
-        details: {
-          initialValue: `input: ${input} >= setValue: ${setValue}`,
-          comment: this.triggerProps.describe.comment['ru'],
-          todo:''
-        }
-      }
+      const res: IEvent = this.fillEvent(input, setValue)
       return res;
     }
     return undefined;
@@ -92,10 +69,6 @@ export class TTriggerFront extends TTriggerCell {
     const setValue: number = setCondition.getConditionValue(args)
     const input = args.get('input')
     
-    //this.state = (input <= resetValue)
-    //? ETriggerCellState.WaitSet
-    //: ETriggerCellState.WaitReset
-    //return undefined;
     if (input <= resetValue) {
       this.state = ETriggerCellState.WaitSet;
       return undefined
