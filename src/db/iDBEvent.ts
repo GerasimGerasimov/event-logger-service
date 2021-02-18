@@ -5,8 +5,8 @@ export interface IEvent {
   trig: string; // FRONT/REAR/TOUGLE
   tag: string;  // U1/RAM/Blank
   details: {    //JSON {"initialValue":"input: 1 >= setValue: 1","comment":"гашение поля","todo":""}
-    initialValue: string;
-    comment: string;
-    todo: string;
+    initialValue: string;//значение входа и условие срабатывания в момент генерации события
+    comment: string;//текстовое описание события (что произошло)
+    todo: string; //рекомендация ЧТО ДЕЛАТЬ при возникновении события
   }
 }
