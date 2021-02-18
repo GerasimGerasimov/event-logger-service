@@ -3,7 +3,7 @@ import { TDBWritter } from './db/dbwritter';
 import TDevicesPositionSource from './DevicesSource/TDevicesPositionSource';
 import TEventsSource from './EventsSource/TEventsSource';
 import { HttpServer } from './http/server/httpserver';
-import { IEvent } from './interfaces/iDBEvent';
+import { IEvent } from './db/iDBEvent';
 import { doTriggers } from './Devices/deviceparser';
 import {TTriggersTemplate, createTemplateOfTriggersGroup } from './Triggers/Group/TriggersTemplate';
 import { TTriggers } from './Triggers/Triggers';

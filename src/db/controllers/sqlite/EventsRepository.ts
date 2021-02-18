@@ -1,5 +1,6 @@
-import { EventScheme, IEvent } from "../../../interfaces/iDBEvent";
+import { IEvent } from "../../iDBEvent";
 import TDAO from "./DAO";
+import { EventScheme } from "./dbscheme";
 
 export default class EventsRepositoty {
   private dao: TDAO;
@@ -16,11 +17,11 @@ export default class EventsRepositoty {
   }
 
   public create(event: IEvent) {
-    const {date, type, trig, tag, details} = {... event}
+    const {utime, date, type, trig, tag, details} = {... event}
     const detailsJSON: string = JSON.stringify(details)
     return this.dao.run(
-      'INSERT INTO events (date, type, trig, tag, details) VALUES (?, ?, ?, ?, ?)',
-      [date, type, trig, tag, detailsJSON]
+      'INSERT INTO events (utime, date, type, trig, tag, details) VALUES (?, ?, ?, ?, ?, ?)',
+      [utime, date, type, trig, tag, detailsJSON]
     )
   }
 

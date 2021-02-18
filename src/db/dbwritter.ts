@@ -1,4 +1,4 @@
-import { IEvent } from "../interfaces/iDBEvent";
+import { IEvent } from "./iDBEvent";
 import TDAO from "./controllers/sqlite/DAO";
 import EventsRepositoty from "./controllers/sqlite/EventsRepository";
 

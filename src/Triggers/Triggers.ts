@@ -1,4 +1,4 @@
-import { IEvent } from "../interfaces/iDBEvent";
+import { IEvent } from "../db/iDBEvent";
 import TDevicesPositionSource from "../DevicesSource/TDevicesPositionSource";
 import TEventsSource from "../EventsSource/TEventsSource";
 import { TTriggersTemplate } from "./Group/TriggersTemplate";

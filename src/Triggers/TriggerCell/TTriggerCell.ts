@@ -1,5 +1,5 @@
-import { nowDateTimeToDBStr } from "../../helpers/utils";
-import { IEvent } from "../../interfaces/iDBEvent";
+import { DateTimeToDBInt, DateTimeToDBStr } from "../../helpers/utils";
+import { IEvent } from "../../db/iDBEvent";
 import { TArg } from "../Args/TArg";
 import { TTriggerProps } from "../Trigger/TTriggerProps";
 
@@ -21,8 +21,10 @@ export abstract class TTriggerCell {
   }
 
   protected fillEvent(input: number, setValue: number): IEvent {
+    const date: Date = new Date()
     const res: IEvent = {
-      date: nowDateTimeToDBStr(),
+      utime: DateTimeToDBInt(date),
+      date: DateTimeToDBStr(date),
       type: this.triggerProps.eventType,
       trig: this.triggerProps.triggerProc.toString(),
       tag: this.args.get('input').Tag,

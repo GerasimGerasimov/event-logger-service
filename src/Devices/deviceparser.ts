@@ -1,5 +1,5 @@
 import { TTriggers } from "../Triggers/Triggers";
-import { IEvent } from "../interfaces/iDBEvent";
+import { IEvent } from "../db/iDBEvent";
 import { ITagAddress } from "./ITagAddress";
 import { devicesInfoStore } from "../http/client/devicesinfo";
 

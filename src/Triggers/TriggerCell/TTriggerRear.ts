@@ -1,4 +1,4 @@
-import { IEvent } from "../../interfaces/iDBEvent";
+import { IEvent } from "../../db/iDBEvent";
 import { TArg } from "../Args/TArg";
 import { TTriggerProps } from "../Trigger/TTriggerProps";
 import { TTriggerCell } from "./TTriggerCell";

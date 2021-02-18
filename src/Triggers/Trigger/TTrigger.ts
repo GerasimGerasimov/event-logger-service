@@ -1,5 +1,5 @@
 import { ITagAddress } from "../../Devices/ITagAddress";
-import { IEvent } from "../../interfaces/iDBEvent";
+import { IEvent } from "../../db/iDBEvent";
 import { ArgFactory, TArg } from "../Args/TArg";
 import { IArgInfo } from "../iTriggers";
 import { TriggerCellFactory } from "../TriggerCell/TriggerCell";

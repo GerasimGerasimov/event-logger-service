@@ -89,6 +89,10 @@ export async function delay(ms: number): Promise<any> {
   });
 }
 
-export function nowDateTimeToDBStr(): string {
-    return new Date().toString().split(' ').slice(1, 6).join(' ');
+export function DateTimeToDBStr(date: Date): string {
+    return date.toString().split(' ').slice(1, 6).join(' ');
+}
+
+export function DateTimeToDBInt(date: Date): number {
+    return date.getTime()
 }

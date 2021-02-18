@@ -1,4 +1,4 @@
-import { IEvent } from "../../interfaces/iDBEvent";
+import { IEvent } from "../../db/iDBEvent";
 import { TArg } from "../Args/TArg";
 import { TCondition, TTriggerProps } from "../Trigger/TTriggerProps";
 import { ETriggerCellState} from "./iTreggerCell";
