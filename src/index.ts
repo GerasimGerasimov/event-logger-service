@@ -1,4 +1,5 @@
 console.log('event-logger-service started');
+
 import { TDBWritter } from './db/dbwritter';
 import TDevicesPositionSource from './DevicesSource/TDevicesPositionSource';
 import TEventsSource from './EventsSource/TEventsSource';
@@ -9,10 +10,11 @@ import {TTriggersTemplate, createTemplateOfTriggersGroup } from './Triggers/Grou
 import { TTriggers } from './Triggers/Triggers';
 import { TDevicesValueStore } from './http/client/devices';
 import { devicesInfoStore } from './http/client/devicesinfo';
-import { delay } from './helpers/utils';
+import { delay} from './helpers/utils';
+import { getDBPath } from './db/dbgetsettings';
 
 //const Server: HttpServer = new HttpServer();
-const DBWritter = new TDBWritter();
+const DBWritter = new TDBWritter(getDBPath());
 const EventsSource = new TEventsSource();
 const DevicesPositionSource = new TDevicesPositionSource()
 const TriggersTemplates: Map<string, TTriggersTemplate> = createTemplateOfTriggersGroup(EventsSource);

@@ -8,8 +8,9 @@ export class TDBWritter {
   private eventsRepo: EventsRepositoty;
   private connected: boolean = false;
 
-  constructor() {
-    this.dao = new TDAO('./db/database.sqlite3');
+  constructor(path:string) {
+    this.dao = new TDAO(path);
+    console.log(`Try to connect to DB by ${path}`)
     this.eventsRepo = new EventsRepositoty(this.dao);
   }
 

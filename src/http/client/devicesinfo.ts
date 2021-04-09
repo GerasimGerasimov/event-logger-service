@@ -56,6 +56,7 @@ export class TDevicesInfoStore {
         //this.getDevicesInfo();
     }
 
+    //TODO тут можно сделать чтобы ждал ответа Taggera
     public async getDevicesInfo(): Promise <void | Error>{
         const data = await DeviceController.getDevicesInfo();
         const DevicesInfo: any = data || {};
