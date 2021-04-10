@@ -13,6 +13,8 @@ import { devicesInfoStore } from './http/client/devicesinfo';
 import { delay} from './helpers/utils';
 import { getDBPath } from './db/dbgetsettings';
 
+/**TODO разобраться с  Error: socket hang up */
+/**TODO сделать ожидание ответа Taggerа при запуске */
 //const Server: HttpServer = new HttpServer();
 const DBWritter = new TDBWritter(getDBPath());
 const EventsSource = new TEventsSource();
