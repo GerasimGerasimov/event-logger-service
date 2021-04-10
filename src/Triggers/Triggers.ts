@@ -43,7 +43,9 @@ export class TTriggers {
         res.add(event)
       }
     })
-    console.log(res)
+    if (res.size) {
+      console.log(res)
+    }
     return res;
   }
 

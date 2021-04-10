@@ -13,10 +13,7 @@ import { devicesInfoStore } from './http/client/devicesinfo';
 import { delay} from './helpers/utils';
 import { getDBPath } from './db/dbgetsettings';
 
-/**TODO разобраться с  Error: socket hang up
- * request to http://localhost:5004/v1/devices/ failed, reason: socket hang up
- * 
-*/
+/**TODO почему-то одно событие генерирует 3 записи в таблице! это как? надо разбираться */
 /**TODO сделать ожидание ответа Taggerа при запуске */
 //const Server: HttpServer = new HttpServer();
 const DBWritter = new TDBWritter(getDBPath());
@@ -37,7 +34,7 @@ const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
     while (true) {
       try {
         for await (let i of devicesValueStore.asyncGenerator()) {
-          console.log(i);//сюда попадаю когда данные прочитаны
+          //console.log(i);//сюда попадаю когда данные прочитаны
           const values: Set<IEvent> = doTriggers(Triggers);
           await DBWritter.write(values)
         }
