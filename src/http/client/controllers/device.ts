@@ -14,6 +14,8 @@ export default class DeviceController {
                 headers: {
                     'Content-Type':'application/json; charset=utf-8',
                 },
+                timeout: 100,//добавил таймаут и быстрее стал вывалиться в случае не ответа (было более 30 сек)
+                             //а так я быстрее делаю перезапрос
                 body:JSON.stringify(request)
             }
             return await fetch(urlDevicesValuesGet, header)

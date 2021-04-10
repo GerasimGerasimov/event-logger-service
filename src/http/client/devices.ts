@@ -4,15 +4,12 @@ import { devicesInfoStore } from './devicesinfo';
 
 export class TDevicesValueStore {
 
-    private autoReloadTimer: any;
     private Tasks = {
         index: 0 as number,
         tasks: [] as Array<object>
     }
 
     constructor() {
-        //this.createTasks(reqs);
-        //this.startAutoReloadData();
     }
   
     public async * asyncGenerator () {
@@ -24,9 +21,9 @@ export class TDevicesValueStore {
       }
 
     private async getOnceData() {
-        await delay(100);
-        /**TODO сделать TimeOut для Fetch */
-        await this.getDeviceDataOnce(this.getNextTask())
+      await this.getDeviceDataOnce(this.getNextTask())
+      await delay(10);
+      /**TODO сделать TimeOut для Fetch */
     }
 
     public createTasks(reqs: Array<any>) {
@@ -34,35 +31,6 @@ export class TDevicesValueStore {
             index: 0,
             tasks: reqs
         }
-    }
-
-    public stopAutoReloadData(){
-        clearTimeout(this.autoReloadTimer);
-    }
-
-    async getDeviceData(task: any){
-      this.stopAutoReloadData()
-        try {
-          const data = await DeviceController.getData(task);
-            for( const key in data.data) {
-              devicesInfoStore.fillValuesFromReceivedData(data.data[key]);
-            }
-        } catch (e) {
-          console.log(e);
-        }
-      this.startAutoReloadData();
-    }
-
-    public startAutoReloadData() {
-        this.autoReloadTimer = setTimeout(async ()=>{
-            const task: any = this.Tasks.tasks[this.Tasks.index]
-            if (task) {
-                await this.getDeviceData(task);
-            }
-            if (++this.Tasks.index === this.Tasks.tasks.length)
-                this.Tasks.index = 0;
-        },
-        10000)
     }
 
     private getNextTask(): any {

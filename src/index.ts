@@ -13,7 +13,10 @@ import { devicesInfoStore } from './http/client/devicesinfo';
 import { delay} from './helpers/utils';
 import { getDBPath } from './db/dbgetsettings';
 
-/**TODO разобраться с  Error: socket hang up */
+/**TODO разобраться с  Error: socket hang up
+ * request to http://localhost:5004/v1/devices/ failed, reason: socket hang up
+ * 
+*/
 /**TODO сделать ожидание ответа Taggerа при запуске */
 //const Server: HttpServer = new HttpServer();
 const DBWritter = new TDBWritter(getDBPath());
