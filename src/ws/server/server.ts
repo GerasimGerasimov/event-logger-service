@@ -6,7 +6,6 @@ export default class WSServer {
     private https: any;
     private wss: any;
     private sockets: Set<Socket>;
-    private count: number = 0;
 
     private proc: getDeviceDataFunc  = undefined;
 
@@ -17,7 +16,7 @@ export default class WSServer {
         this.init();
     }
 
-    private init () {           
+    private init () {
         this.wss = new WebSocket.Server({server: this.https});
         this.wss.on('connection', this.connectionOnWss.bind(this));
     }
@@ -48,6 +47,13 @@ export default class WSServer {
         } catch (e) {
             console.log(e);
         } 
+    }
+
+    public sendNotification() {
+      this.sockets.forEach((socket: Socket) => {
+        socket.send({cmd:'dbchanged',
+                     payload: socket.ID})
+      })
     }
 
     private getData(request: any): any {

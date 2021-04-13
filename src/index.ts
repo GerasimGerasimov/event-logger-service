@@ -15,6 +15,20 @@ import HttpServer from './http/server/server';
 import WSServer from './ws/server/server';
 
 
+/**TODO теперь есть WS при конекте по адресу (вроде такого) ws://localhost:5007/
+ * клиенту даётся его уникальный ID и WSS отвечает
+ * {
+  "cmd": "id",
+  "payload": "Lpz2ew"
+}
+далее основная программа при записи в БД сообщает WSS что данные изменены
+и WSS делает рассылку клиентам сообщениями:
+ * {
+  "cmd": "dbchanged",
+  "ID": "Lpz2ew"
+}
+ * 
+*/
 /**TODO неожиданно! прилитело событие, хотя никаких внешних воздействий
  * на параметры девайса не было! думаю когда будет прописано больше триггеров
  * прилетать будет чаше, что даст больше инфы для отладки.
@@ -49,7 +63,10 @@ const WSS: WSServer = new WSServer(Server.https, undefined);
         for await (let i of devicesValueStore.asyncGenerator()) {
           //console.log(i);//сюда попадаю когда данные прочитаны
           const values: Set<IEvent> = doTriggers(Triggers);
-          await DBWritter.write(values)
+          if (values.size != 0 ){
+            await DBWritter.write(values);
+            WSS.sendNotification();
+          }
         }
       } catch (e) {
         console.log('inner:', e);
