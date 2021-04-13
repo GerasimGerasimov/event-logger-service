@@ -10,12 +10,24 @@ import { TTriggers } from './Triggers/Triggers';
 import { TDevicesValueStore } from './http/client/devices';
 import { devicesInfoStore } from './http/client/devicesinfo';
 import { delay} from './helpers/utils';
-import { getDBPath } from './db/dbgetsettings';
+import { get_db_path, get_http_port } from './settings/settings';
+import HttpServer from './http/server/server';
+import WSServer from './ws/server/server';
 
-/**TODO почему-то одно событие генерирует 3 записи в таблице! это как? надо разбираться */
+
+/**TODO неожиданно! прилитело событие, хотя никаких внешних воздействий
+ * на параметры девайса не было! думаю когда будет прописано больше триггеров
+ * прилетать будет чаше, что даст больше инфы для отладки.
+ * date:'Apr 13 2021 10:56:28 GMT+0700'
+    details:{initialValue: 'input: 1 >= setValue: 1', comment: 'гашение поля', todo: ''}
+    tag:'U1/RAM/Blank'
+    trig:'FRONT'
+    type:'info'
+    utime:1618286188556
+ */
 /**TODO сделать ожидание ответа Taggerа при запуске */
 //const Server: HttpServer = new HttpServer();
-const DBWritter = new TDBWritter(getDBPath());
+const DBWritter = new TDBWritter(get_db_path());
 const EventsSource = new TEventsSource();
 const DevicesPositionSource = new TDevicesPositionSource()
 const TriggersTemplates: Map<string, TTriggersTemplate> = createTemplateOfTriggersGroup(EventsSource);
@@ -25,6 +37,8 @@ const Triggers = new TTriggers({
         positions: DevicesPositionSource});
 
 const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
+const Server: HttpServer = new HttpServer(get_http_port());
+const WSS: WSServer = new WSServer(Server.https, undefined);
 
 (async () => {
   try {
