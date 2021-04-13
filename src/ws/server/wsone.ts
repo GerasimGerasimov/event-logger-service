@@ -1,8 +1,7 @@
+import { randomStringAsBase64Url } from '../../helpers/cryputils';
+import { ErrorMessage, validationJSON } from '../../helpers/errors';
 import WebSocket = require('ws');
-import {validationJSON} from '../../utils/types'
-import {TTask, TMessage, TRespond} from './types'
-import {ErrorMessage} from '../../utils/errors'
-import {randomStringAsBase64Url} from '../../utils/cryputils'
+import { TMessage, TRespond, TTask } from './types';
 
 export class TSocketParameters {
     ws: WebSocket;
