@@ -14,21 +14,6 @@ import { get_db_path, get_http_port } from './settings/settings';
 import HttpServer from './http/server/server';
 import WSServer from './ws/server/server';
 
-
-/**TODO теперь есть WS при конекте по адресу (вроде такого) ws://localhost:5007/
- * клиенту даётся его уникальный ID и WSS отвечает
- * {
-  "cmd": "id",
-  "payload": "Lpz2ew"
-}
-далее основная программа при записи в БД сообщает WSS что данные изменены
-и WSS делает рассылку клиентам сообщениями:
- * {
-  "cmd": "dbchanged",
-  "ID": "Lpz2ew"
-}
- * 
-*/
 /**TODO неожиданно! прилитело событие, хотя никаких внешних воздействий
  * на параметры девайса не было! думаю когда будет прописано больше триггеров
  * прилетать будет чаше, что даст больше инфы для отладки.
@@ -39,7 +24,7 @@ import WSServer from './ws/server/server';
     type:'info'
     utime:1618286188556
  */
-/**TODO сделать ожидание ответа Taggerа при запуске */
+
 //const Server: HttpServer = new HttpServer();
 const DBWritter = new TDBWritter(get_db_path());
 const EventsSource = new TEventsSource();
