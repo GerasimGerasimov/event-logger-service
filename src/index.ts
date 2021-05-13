@@ -14,6 +14,8 @@ import { get_db_path, get_http_port } from './settings/settings';
 import HttpServer from './http/server/server';
 import WSServer from './ws/server/server';
 
+/**работаю в ветке tagger-over-ws */
+
 /**TODO неожиданно! прилитело событие, хотя никаких внешних воздействий
  * на параметры девайса не было! думаю когда будет прописано больше триггеров
  * прилетать будет чаше, что даст больше инфы для отладки.
