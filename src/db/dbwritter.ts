@@ -22,7 +22,7 @@ export class TDBWritter {
     this.connected = true;
   }
 
-  public async write(values: Set<IEvent>){
+  public async write(values: Set<IEvent>): Promise<boolean> {
     if (values.size != 0) {
       if (this.isConnected) {
         try {
@@ -36,11 +36,12 @@ export class TDBWritter {
         }
         await this.dao.run('COMMIT TRANSACTION');
         console.log('end row count:', await this.eventsRepo.getRowCount())
+        return true;
       } else {
           await this.connectToDB();
-          return;
       }
     }
+    return false;
   }
 
   private get isConnected(): boolean {

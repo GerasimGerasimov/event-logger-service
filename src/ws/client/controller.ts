@@ -13,6 +13,14 @@ export default class HostController {
         this.onIncomingMessage = handler;
     }
      
+    public async open() {
+
+    }
+
+    public async close() {
+
+    }
+
     public checkIncomingMessage(respond: any): IServiceRespond | IErrorMessage {
       try {
         let msg: any = validationJSON(respond);
@@ -67,9 +75,13 @@ export default class HostController {
         }
     }
 
-    public async getValues(host: string, ID: string):Promise<any | IErrorMessage> {
+    public async getValues(request: any):Promise<any | IErrorMessage> {
         try {
-            const payload: string = JSON.stringify({get:ID});
+            const payload = {
+                cmd: 'getInfo',
+                ClientID: this.ClientID,
+                payload: request
+            }
             return await this.wss.send(payload)
                 .then (this.validationJSON);
         } catch(e) {

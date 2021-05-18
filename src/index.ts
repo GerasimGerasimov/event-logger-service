@@ -14,6 +14,7 @@ import { get_db_path, get_http_port } from './settings/settings';
 import HttpServer from './http/server/server';
 import WSServer from './ws/server/server';
 import HostController from './ws/client/controller';
+import DeviceController from './http/client/controllers/device';
 
 /**работаю в ветке tagger-over-ws */
 
@@ -49,31 +50,33 @@ function handler(arg: any){
 }
 
 const Tagger: HostController = new HostController({host: TaggerURL, handler});
+DeviceController.init(Tagger);
 
-/** как хотелось бы организовать код
+/** как хотелось бы организовать код*/
 (async () => { 
   while (true) {
     try {
-      await Tagger.getID();//открыть соединение и получить ClientID
-      await devicesInfoStore.getDevicesInfo(Tagger);//получить инфу об устройствах
+      await Tagger.open();//открыть соединение и получить ClientID
+      await devicesInfoStore.getDevicesInfo();//получить инфу об устройствах
       devicesValueStore.createTasks(Triggers.getReqiests());//разбить на задачи для чтения
       while (true) {
         for await (let i of devicesValueStore.asyncGenerator()) {
-          const written: boolean = await DBWritter.writeIfNotEmpty(doTriggers(Triggers));
-          if (written) {
-            WSS.sendNotificationAfter(1000ms);
-          }
+          //const written: boolean = await DBWritter.write(doTriggers(Triggers));
+          //if (written) {
+          //  WSS.sendNotificationAfter(1000);
+          //}
         }
       }
     } catch (e) {
       Tagger.close();//закрыть соединение
+      devicesValueStore.clearTasks()
     }
 
   }
 })();
- */
 
 
+/*
 (async () => {
   try {
     await devicesInfoStore.getDevicesInfo();
@@ -98,3 +101,4 @@ const Tagger: HostController = new HostController({host: TaggerURL, handler});
   }
   console.log('event-logger-service stoped')
 })();
+*/

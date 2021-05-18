@@ -33,6 +33,13 @@ export class TDevicesValueStore {
         }
     }
 
+    public clearTasks() {
+      this.Tasks = {
+          index: 0,
+          tasks: []
+      }
+    }
+
     private getNextTask(): any {
         const task: any = this.Tasks.tasks[this.Tasks.index]
         if (++this.Tasks.index === this.Tasks.tasks.length) {

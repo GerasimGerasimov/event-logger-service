@@ -56,6 +56,10 @@ export default class WSServer {
       })
     }
 
+    public sendNotificationAfter(respite: number) {
+
+    }
+
     private getData(request: any): any {
         const payload = this.proc(request);
         return payload;
