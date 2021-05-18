@@ -1,6 +1,6 @@
 import WebSocket = require('ws');
 interface getDeviceDataFunc {({}): any;}
-import {Socket, TSocketParameters} from './wsone';
+import {Socket, TSocketParameters} from '../wsone';
 
 export default class WSServer {
     private https: any;

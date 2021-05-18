@@ -1,5 +1,5 @@
-import { randomStringAsBase64Url } from '../../helpers/cryputils';
-import { ErrorMessage, validationJSON } from '../../helpers/errors';
+import { randomStringAsBase64Url } from '../helpers/cryputils';
+import { ErrorMessage, validationJSON } from '../helpers/errors';
 import WebSocket = require('ws');
 import { TMessage, TRespond, TTask } from './types';
 

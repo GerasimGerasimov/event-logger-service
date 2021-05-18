@@ -1,3 +1,7 @@
+export interface IServiceRespond {
+    any;
+}
+
 export class TTask {
     MessageID: string;
     cmd: string;
