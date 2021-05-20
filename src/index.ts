@@ -57,6 +57,9 @@ DeviceController.init(Tagger);
   while (true) {
     try {
       await Tagger.open();//открыть соединение и получить ClientID
+      await delay(5000);//подождал 3 а потом закрыл соединение
+      throw new Error ('Now i going to close connection');
+      /*
       await devicesInfoStore.getDevicesInfo();//получить инфу об устройствах
       devicesValueStore.createTasks(Triggers.getReqiests());//разбить на задачи для чтения
       while (true) {
@@ -67,9 +70,11 @@ DeviceController.init(Tagger);
           //}
         }
       }
+      */
     } catch (e) {
+      console.log(e);
       Tagger.close();//закрыть соединение
-      devicesValueStore.clearTasks()
+      //devicesValueStore.clearTasks()
     }
 
   }

@@ -15,10 +15,19 @@ export default class WSControl {
         this.initSocket();
     }
 
+    public setHandler(handler: handler) {
+      this.onIncomingMessage = handler;
+    }
+
+    public close() {
+      this.ws.close();
+      this.ws = null;
+    }
+
     public async send(payload: any){
-        await this.waitForConnect();
-        await this.waitBufferRelease();
-        this.ws.send(JSON.stringify(payload));
+      await this.waitForConnect();
+      this.ws.send(JSON.stringify(payload));
+      await this.waitBufferRelease();
     }
 
     // Инициализация сокета и восстановление связи
@@ -42,13 +51,10 @@ export default class WSControl {
     private onClose(event: any) {
         console.log(`Closed connection to ${this.host}`);
         this.hostState = false;
-        setTimeout(() => {
-            console.log(`Try connect to ${this.host}`);
-            this.initSocket();
-        }, 3000);        
     }
 
     private onMessage(msg: any) {
+      if (this.onIncomingMessage)
         this.onIncomingMessage(msg.data);
     }
 

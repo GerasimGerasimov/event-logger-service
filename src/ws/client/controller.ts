@@ -4,30 +4,55 @@ import WSControl from './wscontroller'
 
 export default class HostController {
 
-    private  wss: WSControl;
+    private host: string;
+    private wss: WSControl;
     private ClientID: string = '';
     private onIncomingMessage: Function = undefined;
     
     constructor ({ host, handler }: { host: string; handler: Function; }){
-        this.wss = new WSControl({ host, handler: this.checkIncomingMessage.bind(this) });
-        this.onIncomingMessage = handler;
+      this.host = host;
+      this.onIncomingMessage = handler;
     }
      
     public async open() {
-
+      this.ClientID = ''
+      this.wss = null;
+      this.wss = new WSControl({
+          host: this.host,
+          handler: this.checkIncomingMessage.bind(this) });
+      //и тут надо дождаться получения ID. как?!
+      const ID: string = await this.waitFor();
+      console.log(ID)
     }
+
+    private async waitFor(): Promise<string> {
+      return new Promise((resolve, reject) => {
+            //if (this.ClientID) return resolve(this.ClientID);
+        this.wss.setHandler(this.checkIncomingMessage.bind(this, resolve, reject))
+      })
+    }
+
 
     public async close() {
-
+      this.ClientID = ''
+      this.wss.close();
+      this.wss = null;
     }
 
-    public checkIncomingMessage(respond: any): IServiceRespond | IErrorMessage {
+    public checkIncomingMessage(resolve, reject, respond: any): IServiceRespond | IErrorMessage {
       try {
         let msg: any = validationJSON(respond);
         this.decodeCommand(msg);
-        if (this.onIncomingMessage)
+        if (this.onIncomingMessage) {
+          if (resolve) {
+              resolve(msg)
+            }
           return this.onIncomingMessage(msg);
+        }
       } catch(e) {
+        if (reject) {
+            reject('e')
+        }
         return ErrorMessage (e.message);
       }
     }
