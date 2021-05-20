@@ -54,8 +54,9 @@ export default class WSControl {
     }
 
     private onMessage(msg: any) {
-      if (this.onIncomingMessage)
+      if (this.onIncomingMessage) {
         this.onIncomingMessage(msg.data);
+      }
     }
 
     private async waitForConnect(): Promise<string> {

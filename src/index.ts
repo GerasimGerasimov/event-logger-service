@@ -45,11 +45,7 @@ const WSS: WSServer = new WSServer(Server.https, undefined);
 
 const TaggerURL: string = 'http://localhost:5004/';
 
-function handler(arg: any){
-  console.log(arg)
-}
-
-const Tagger: HostController = new HostController({host: TaggerURL, handler});
+const Tagger: HostController = new HostController({host: TaggerURL});
 DeviceController.init(Tagger);
 
 /** как хотелось бы организовать код*/

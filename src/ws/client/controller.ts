@@ -2,16 +2,23 @@ import { IServiceRespond, TMessage } from '../types';
 import { ErrorMessage, IErrorMessage, validationJSON } from './../../helpers/errors';
 import WSControl from './wscontroller'
 
+interface PromiseCallback {
+    resolve: any,
+    reject: any
+}
+
 export default class HostController {
 
     private host: string;
     private wss: WSControl;
     private ClientID: string = '';
-    private onIncomingMessage: Function = undefined;
+    private promise: PromiseCallback = {
+        resolve: null,
+        reject: null
+    }
     
-    constructor ({ host, handler }: { host: string; handler: Function; }){
+    constructor ({ host}: { host: string}){
       this.host = host;
-      this.onIncomingMessage = handler;
     }
      
     public async open() {
@@ -28,7 +35,9 @@ export default class HostController {
     private async waitFor(): Promise<string> {
       return new Promise((resolve, reject) => {
             //if (this.ClientID) return resolve(this.ClientID);
-        this.wss.setHandler(this.checkIncomingMessage.bind(this, resolve, reject))
+        this.wss.setHandler(
+            this.checkIncomingMessage.bind(this));
+        this.promise = {resolve, reject};
       })
     }
 
@@ -37,22 +46,14 @@ export default class HostController {
       this.ClientID = ''
       this.wss.close();
       this.wss = null;
+      this.promise = {resolve:null, reject:null};
     }
 
-    public checkIncomingMessage(resolve, reject, respond: any): IServiceRespond | IErrorMessage {
+    public checkIncomingMessage(respond: any): IServiceRespond | IErrorMessage {
       try {
         let msg: any = validationJSON(respond);
-        this.decodeCommand(msg);
-        if (this.onIncomingMessage) {
-          if (resolve) {
-              resolve(msg)
-            }
-          return this.onIncomingMessage(msg);
-        }
+        return this.decodeCommand(msg);
       } catch(e) {
-        if (reject) {
-            reject('e')
-        }
         return ErrorMessage (e.message);
       }
     }
@@ -72,6 +73,7 @@ export default class HostController {
 
     private setClientID(msg: TMessage) {
       this.ClientID = msg.payload;
+      return this.promise.resolve(this.ClientID)
     }
 
     private handleStatusField (respond: any): void {
