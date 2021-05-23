@@ -54,7 +54,7 @@ DeviceController.init(Tagger);
     try {
       await Tagger.open();//открыть соединение и получить ClientID
       await delay(5000);//подождал 3 а потом закрыл соединение
-      throw new Error ('Now i going to close connection');
+      throw new Error ('Now i`m going to close connection');
       /*
       await devicesInfoStore.getDevicesInfo();//получить инфу об устройствах
       devicesValueStore.createTasks(Triggers.getReqiests());//разбить на задачи для чтения
@@ -68,8 +68,8 @@ DeviceController.init(Tagger);
       }
       */
     } catch (e) {
-      console.log(e);
-      Tagger.close();//закрыть соединение
+      console.log('главЛовушка',e);
+      await Tagger.close();//закрыть соединение
       //devicesValueStore.clearTasks()
     }
 

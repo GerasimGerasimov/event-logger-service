@@ -7,58 +7,52 @@ export default class WSControl {
     private host: string;
     private ws:WebSocket;
     private hostState: boolean = false;
-    private onIncomingMessage: handler;
 
     constructor ({ host, handler }: { host: string; handler: handler; }){
         this.host = host;
-        this.onIncomingMessage = handler;
-        this.initSocket();
     }
 
-    public setHandler(handler: handler) {
-      this.onIncomingMessage = handler;
-    }
-
-    public close() {
+    public async close(): Promise<string> {
       this.ws.close();
+      const res: string = await this.waitForEvent();
       this.ws = null;
+      return res;
     }
 
     public async send(payload: any){
-      await this.waitForConnect();
+      //await this.waitForConnect();
       this.ws.send(JSON.stringify(payload));
       await this.waitBufferRelease();
     }
 
+    public async waitForEvent(): Promise<any> {
+        return new Promise((resolve, reject)=>{
+            this.ws.onerror = (event) => {
+                console.log(`Error of connection to ${this.host} ${event}`);
+                reject(`Error of connection to ${this.host} ${event}`);
+            };
+            this.ws.onopen = (event) => {
+                console.log(`Opened connection to ${this.host}`);
+                this.hostState = true;
+            };
+            this.ws.onclose = (event) => {
+                console.log(`Closed connection to ${this.host}`);
+                this.hostState = false;
+                resolve('close');
+            };
+            this.ws.onmessage = (message) => {
+                resolve(message.data);
+            }
+        }
+        )
+    }
     // Инициализация сокета и восстановление связи
-    private initSocket() {
+    public async open(): Promise<any> {
         this.ws = new WebSocket(this.host);
-        this.ws.onerror = this.onError.bind(this);
-        this.ws.onopen = this.onOpen.bind(this);
-        this.ws.onclose = this.onClose.bind(this);
-        this.ws.onmessage = this.onMessage.bind(this);
+        return await this.waitForEvent();
     }
 
-    private onOpen(event: any) {
-        console.log(`Opened connection to ${this.host}`);
-        this.hostState = true;
-    }    
-
-    private onError(event: any) {
-        console.log(`Error of connection to ${this.host} ${event}`);
-    }
-
-    private onClose(event: any) {
-        console.log(`Closed connection to ${this.host}`);
-        this.hostState = false;
-    }
-
-    private onMessage(msg: any) {
-      if (this.onIncomingMessage) {
-        this.onIncomingMessage(msg.data);
-      }
-    }
-
+   /*
     private async waitForConnect(): Promise<string> {
         return new Promise(async (resolve, reject) => {
             if (this.hostState) return resolve('');
@@ -71,7 +65,7 @@ export default class WSControl {
             }, 100);
         })
     }
-
+    */
     //чтени сокета в режиме запрос-ожидание ответа- ответ
     private async waitBufferRelease(): Promise<any> {
         return new Promise((resolve, reject) => {

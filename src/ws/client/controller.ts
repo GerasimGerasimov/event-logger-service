@@ -2,21 +2,12 @@ import { IServiceRespond, TMessage } from '../types';
 import { ErrorMessage, IErrorMessage, validationJSON } from './../../helpers/errors';
 import WSControl from './wscontroller'
 
-interface PromiseCallback {
-    resolve: any,
-    reject: any
-}
-
 export default class HostController {
 
     private host: string;
     private wss: WSControl;
     private ClientID: string = '';
-    private promise: PromiseCallback = {
-        resolve: null,
-        reject: null
-    }
-    
+
     constructor ({ host}: { host: string}){
       this.host = host;
     }
@@ -26,36 +17,29 @@ export default class HostController {
       this.wss = null;
       this.wss = new WSControl({
           host: this.host,
-          handler: this.checkIncomingMessage.bind(this) });
-      //и тут надо дождаться получения ID. как?!
-      const ID: string = await this.waitFor();
-      console.log(ID)
+          handler: this.validateIncomingMessage.bind(this) });
+      this.ClientID = await this.waitForID();
+      console.log(this.ClientID);
     }
 
-    private async waitFor(): Promise<string> {
-      return new Promise((resolve, reject) => {
-            //if (this.ClientID) return resolve(this.ClientID);
-        this.wss.setHandler(
-            this.checkIncomingMessage.bind(this));
-        this.promise = {resolve, reject};
-      })
+    private async waitForID(): Promise<string> {
+      const respond: any = await this.wss.open();
+      const msg: any = this.validateIncomingMessage(respond);
+      const data: any = this.decodeCommand(msg);
+      return data;
     }
 
 
     public async close() {
-      this.ClientID = ''
-      this.wss.close();
+      const res: string = await this.wss.close();
+      console.log(`Connection ${this.ClientID} has been closed`);
       this.wss = null;
-      this.promise = {resolve:null, reject:null};
+      this.ClientID = '';
     }
 
-    public checkIncomingMessage(respond: any): IServiceRespond | IErrorMessage {
-      try {
+    public validateIncomingMessage(respond: any): IServiceRespond | IErrorMessage {
         let msg: any = validationJSON(respond);
-        return this.decodeCommand(msg);
-      } catch(e) {
-        return ErrorMessage (e.message);
-      }
+        return msg;
     }
 
     private decodeCommand(msg: TMessage): any {
@@ -71,9 +55,8 @@ export default class HostController {
         return (commands[key] || commands['default'])(msg)
     }
 
-    private setClientID(msg: TMessage) {
-      this.ClientID = msg.payload;
-      return this.promise.resolve(this.ClientID)
+    private setClientID(msg: TMessage): string {
+      return msg.payload;
     }
 
     private handleStatusField (respond: any): void {
