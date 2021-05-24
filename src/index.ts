@@ -58,10 +58,9 @@ DeviceController.init(Tagger);
       while (true) {
         //TODO надо чтобы на переконнект с WS вываливался только если Fetch Error
         for await (let i of devicesValueStore.asyncGenerator()) {
-          console.log(i);
           const written: boolean = await DBWritter.write(doTriggers(Triggers));
           if (written) {
-            WSS.sendNotificationAfter(1000);
+            WSS.sendNotificationAfter(3000);
           }
         }
       }

@@ -8,6 +8,7 @@ export default class WSServer {
     private sockets: Set<Socket>;
 
     private proc: getDeviceDataFunc  = undefined;
+    private notificationTimer: any = null;
 
     constructor (https: any, proc: getDeviceDataFunc) {
         this.https = https;
@@ -56,8 +57,13 @@ export default class WSServer {
       })
     }
 
-    public sendNotificationAfter(respite: number) {
-
+    public sendNotificationAfter(delay: number) {
+        if (this.notificationTimer !== null) return;
+        this.notificationTimer = setTimeout(()=>{
+            this.sendNotification();
+            clearTimeout(this.notificationTimer);
+            this.notificationTimer = null;
+        }, delay);
     }
 
     private getData(request: any): any {
