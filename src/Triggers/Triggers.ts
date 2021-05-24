@@ -52,7 +52,7 @@ export class TTriggers {
   //"U1":{
   //  "RAM":["Usgz","DEX_STATE"],
   //[ {"U1":{"RAM":"ALL"}}, {"U2":{"FLASH":"ALL"}}
-  public getReqiests(): Array<any> {
+  public getRequests(): Array<any> {
     let req: Map<string, Map<string, Set<string>>> = new Map();
     this.triggers.forEach( (trigger: TTrigger) => {
       req = trigger.getRequest(req)

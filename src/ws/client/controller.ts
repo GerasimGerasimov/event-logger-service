@@ -46,8 +46,8 @@ export default class HostController {
         const key = msg.cmd;
         const commands = {
             'id'           : this.setClientID.bind(this),
-            'getInfo'      : this.handleGetInfo.bind(this),
-            'getValues'    : this.getValues.bind(this),
+            'getInfo'      : this.handleGetMessage.bind(this),
+            'getValues'    : this.handleGetMessage.bind(this),
             'default': () => {
                 return ErrorMessage('Unknown command');
             }
@@ -59,16 +59,8 @@ export default class HostController {
       return msg.payload;
     }
 
-    private handleStatusField (respond: any): void {
-        if (!respond.status) throw new Error ('Status field does not exist');
-    }
-
-    private handleErrorStatus(respond: any): void {
-        if (respond.status === 'Error') throw new Error (respond.msg);
-    }
-
-    private async handleGetInfo(msg: TMessage):Promise<any | IErrorMessage> {
-
+    private handleGetMessage(msg: TMessage):Promise<any | IErrorMessage> {
+        return msg.payload;
     }
 
     public async getInfo():Promise<any | IErrorMessage> {
@@ -77,8 +69,8 @@ export default class HostController {
                 cmd: 'getInfo',
                 ClientID: this.ClientID
             }
-            return await this.wss.send(payload)
-                .then (this.validationJSON);
+            const respond: any = await this.waitForMessage(payload);
+            return respond;
         } catch(e) {
             console.log(e);
             throw new Error (`Fetch Error: ${e.message}`);
@@ -86,25 +78,30 @@ export default class HostController {
     }
 
     public async getValues(request: any):Promise<any | IErrorMessage> {
-        try {
-            const payload = {
-                cmd: 'getInfo',
-                ClientID: this.ClientID,
-                payload: request
-            }
-            return await this.wss.send(payload)
-                .then (this.validationJSON);
-        } catch(e) {
-            console.log(e);
-            throw new Error (`Fetch Error: ${e.message}`);
+        const payload = {
+            cmd: 'getValues',
+            ClientID: this.ClientID,
+            payload: request
         }
+        const respond: any = await this.waitForMessage(payload);
+        this.handleStatusField(respond);
+        this.handleErrorStatus(respond)
+        return respond;
     }
 
-    private validationJSON (data: any): any | IErrorMessage {
-        try {
-            return JSON.parse(data);
-        } catch (e) {
-            throw new Error ('Invalid JSON');
-        }
+    private handleStatusField (respond: any): void {
+        if (!respond.status) throw new Error ('Status field does not exist');
     }
+
+    private handleErrorStatus(respond: any): void {
+        if (respond.status === 'Error') throw new Error (respond.msg);
+    }
+
+    private async waitForMessage(request: any): Promise<string> {
+        const respond: string = await this.wss.send(request);
+        const msg: any = this.validateIncomingMessage(respond);
+        const data: any = this.decodeCommand(msg);
+        return data;
+    }
+
 }

@@ -8,19 +8,13 @@ export default class DeviceController {
       this.Client = Client;
     }
     
-    public static async  getData(request: object): Promise<any> {
-        try {
-            return await this.Client.getValues(request)
-                .then (this.validationJSON);
-        } catch(e) {
-            throw new Error (`Fetch Error: ${e.message}`);
-        }
+    public static async  getValues(request: object): Promise<any> {
+        return await this.Client.getValues(request)
     }
 
     public static async getDevicesInfo(): Promise<any> {
         try {
-            return await this.Client.getInfo()
-                .then (this.validationJSON);
+            return await this.Client.getInfo();
         } catch(e) {
             //console.log(e);
             throw new Error (`Fetch Error: ${e.message}`);

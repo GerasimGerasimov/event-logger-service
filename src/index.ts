@@ -53,22 +53,22 @@ DeviceController.init(Tagger);
   while (true) {
     try {
       await Tagger.open();//открыть соединение и получить ClientID
-      await delay(5000);//подождал 3 а потом закрыл соединение
-      throw new Error ('Now i`m going to close connection');
-      /*
       await devicesInfoStore.getDevicesInfo();//получить инфу об устройствах
-      devicesValueStore.createTasks(Triggers.getReqiests());//разбить на задачи для чтения
+      devicesValueStore.createTasks(Triggers.getRequests());//разбить на задачи для чтения
       while (true) {
+        //TODO надо чтобы на переконнект с WS вываливался только если Fetch Error
         for await (let i of devicesValueStore.asyncGenerator()) {
-          //const written: boolean = await DBWritter.write(doTriggers(Triggers));
-          //if (written) {
-          //  WSS.sendNotificationAfter(1000);
-          //}
+          console.log(i);
+          const written: boolean = await DBWritter.write(doTriggers(Triggers));
+          if (written) {
+            WSS.sendNotificationAfter(1000);
+          }
         }
       }
-      */
+
     } catch (e) {
       console.log('главЛовушка',e);
+      await delay(5000);//подождал 3 а потом закрыл соединение
       await Tagger.close();//закрыть соединение
       //devicesValueStore.clearTasks()
     }
