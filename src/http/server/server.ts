@@ -18,5 +18,6 @@ export default class HttpServer{
     private init () {
       app.use(cors())
       this.https = http.createServer(app).listen(this.port);
+      console.log(`Server started at ${this.port} port`)
     }
 }
