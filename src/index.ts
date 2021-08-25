@@ -41,6 +41,7 @@ const WSS: WSServer = new WSServer(Server.https, undefined);
 
 (async () => {
   try {
+    await DBWritter.connectToDB();
     await devicesInfoStore.getDevicesInfo();
     devicesValueStore.createTasks(Triggers.getReqiests());
     while (true) {

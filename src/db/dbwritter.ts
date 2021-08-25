@@ -14,7 +14,7 @@ export class TDBWritter {
     this.eventsRepo = new EventsRepositoty(this.dao);
   }
 
-  private async connectToDB(){
+  public async connectToDB(){
     console.log('start to create table')
     await this.eventsRepo.createTable();
     console.log('table is created')
@@ -24,22 +24,17 @@ export class TDBWritter {
 
   public async write(values: Set<IEvent>){
     if (values.size != 0) {
-      if (this.isConnected) {
-        try {
-          await this.dao.run('BEGIN TRANSACTION');
-          for (const value of values) {
-            console.log(`create record: ${value.date}, ${value.tag}`)
-            await this.eventsRepo.create(value)
-          }
-        } catch(e) {
-          console.log('DB Error :', e)
+      try {
+        await this.dao.run('BEGIN TRANSACTION');
+        for (const value of values) {
+          console.log(`create record: ${value.date}, ${value.tag}`)
+          await this.eventsRepo.create(value)
         }
-        await this.dao.run('COMMIT TRANSACTION');
-        console.log('end row count:', await this.eventsRepo.getRowCount())
-      } else {
-          await this.connectToDB();
-          return;
+      } catch(e) {
+        console.log('DB Error :', e)
       }
+      await this.dao.run('COMMIT TRANSACTION');
+      console.log('end row count:', await this.eventsRepo.getRowCount())
     }
   }
 
