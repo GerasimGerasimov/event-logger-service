@@ -1,6 +1,4 @@
 console.log('event-logger-service started');
-
-import { ConfigPath } from './helpers/configpath';
 import { TDBWritter } from './db/dbwritter';
 import TDevicesPositionSource from './DevicesSource/TDevicesPositionSource';
 import TEventsSource from './EventsSource/TEventsSource';
@@ -10,11 +8,11 @@ import {TTriggersTemplate, createTemplateOfTriggersGroup } from './Triggers/Grou
 import { TTriggers } from './Triggers/Triggers';
 import { TDevicesValueStore } from './http/client/devices';
 import { devicesInfoStore } from './http/client/devicesinfo';
-import { delay} from './helpers/utils';
+import { ConfDirName, delay} from './helpers/utils';
 import { get_db_path, get_http_port } from './settings/settings';
 import HttpServer from './http/server/server';
 import WSServer from './ws/server/server';
-console.log(ConfigPath);
+console.log(ConfDirName);
 
 /**TODO неожиданно! прилитело событие, хотя никаких внешних воздействий
  * на параметры девайса не было! думаю когда будет прописано больше триггеров
