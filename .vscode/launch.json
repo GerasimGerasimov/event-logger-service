@@ -7,13 +7,13 @@
     {
       "type": "node",
       "request": "launch",
-      "args": ["./config.json"],
+      "args": ["../../dexs-gen-configuration/event-logger-service"],
       "name": "Запустить программу",
       "preLaunchTask": "npm: build",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\src\\index.ts",
+      "program": "${workspaceFolder}/src/index.ts",
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]

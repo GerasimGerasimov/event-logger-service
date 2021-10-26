@@ -10,7 +10,7 @@ import { TTriggers } from './Triggers/Triggers';
 import { TDevicesValueStore } from './http/client/devices';
 import { devicesInfoStore } from './http/client/devicesinfo';
 import { delay} from './helpers/utils';
-import { get_db_path, get_http_port } from './settings/settings';
+import { get_db_path, get_http_port, get_source_url } from './settings/settings';
 import HttpServer from './http/server/server';
 import WSServer from './ws/server/server';
 import HostController from './ws/client/controller';
@@ -43,7 +43,7 @@ const devicesValueStore:TDevicesValueStore = new TDevicesValueStore();
 const Server: HttpServer = new HttpServer(get_http_port());
 const WSS: WSServer = new WSServer(Server.https, undefined);
 
-const TaggerURL: string = 'http://localhost:5004/';
+const TaggerURL: string = get_source_url();
 
 const Tagger: HostController = new HostController({host: TaggerURL});
 DeviceController.init(Tagger);
@@ -74,31 +74,3 @@ DeviceController.init(Tagger);
 
   }
 })();
-
-
-/*
-(async () => {
-  try {
-    await devicesInfoStore.getDevicesInfo();
-    devicesValueStore.createTasks(Triggers.getReqiests());
-    while (true) {
-      try {
-        for await (let i of devicesValueStore.asyncGenerator()) {
-          //console.log(i);//сюда попадаю когда данные прочитаны
-          const values: Set<IEvent> = doTriggers(Triggers);
-          if (values.size != 0 ){
-            await DBWritter.write(values);
-            WSS.sendNotification();
-          }
-        }
-      } catch (e) {
-        console.log('inner:', e);
-      }
-      await delay(1000);
-    }
-  } catch (e) {
-    console.log('extern:', e);
-  }
-  console.log('event-logger-service stoped')
-})();
-*/

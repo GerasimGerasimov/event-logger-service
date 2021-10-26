@@ -16,3 +16,9 @@ export function get_http_port(): number {
   //if (!port) {throw new Error('Path to DB is not found')} 
   return port;
 }
+
+export function get_source_url(): string {
+  Utils.validateFolderExistence(DevicesSourceDir);
+  const sourceURL: string = Utils.getJSONFromFile(DevicesSourceDir, 'config.json').SourceURL || 'http://localhost:5004/';
+  return sourceURL;
+}

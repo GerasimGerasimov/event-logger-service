@@ -42,6 +42,17 @@ export default class HostController {
         return msg;
     }
 
+    private validateDataMsg(respond: any): any | IErrorMessage {
+        if ('status' in respond) {
+            if (respond.status === 'OK') {
+                if ('data' in respond) {
+                    return respond.data;
+                }
+            }
+        }
+        throw new Error (`Incorrect respond ${respond}`);
+    }
+
     private decodeCommand(msg: TMessage): any {
         const key = msg.cmd;
         const commands = {
@@ -70,7 +81,8 @@ export default class HostController {
                 ClientID: this.ClientID
             }
             const respond: any = await this.waitForMessage(payload);
-            return respond;
+            const validRespond: any = this.validateDataMsg(respond);
+            return validRespond;
         } catch(e) {
             console.log(e);
             throw new Error (`Fetch Error: ${e.message}`);
@@ -86,7 +98,8 @@ export default class HostController {
         const respond: any = await this.waitForMessage(payload);
         this.handleStatusField(respond);
         this.handleErrorStatus(respond)
-        return respond;
+        const validRespond: any = this.validateDataMsg(respond);
+        return validRespond;
     }
 
     private handleStatusField (respond: any): void {

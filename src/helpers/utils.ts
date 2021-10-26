@@ -1,7 +1,8 @@
 import fs = require('fs');
 import path = require('path');
+import { ConfigPath } from './configpath';
 
-export const ConfDirName: string = path.resolve(__dirname,'../.././config/');
+export const ConfDirName: string = path.resolve(ConfigPath,'');
 
 export function getAbsDirPath(dir: string): string {
     const result: string = path.resolve(`${ConfDirName}`, dir);

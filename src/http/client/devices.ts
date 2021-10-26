@@ -50,8 +50,8 @@ export class TDevicesValueStore {
 
     private async getDeviceDataOnce(task: any){ 
       const data = await DeviceController.getValues(task);
-        for( const key in data.data) {
-          devicesInfoStore.fillValuesFromReceivedData(data.data[key]);
+        for( const key in data) {
+          devicesInfoStore.fillValuesFromReceivedData(data[key]);
         }
     }
 
